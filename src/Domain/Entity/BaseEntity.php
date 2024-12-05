@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace App\Domain\Entity;
 
+use App\Infrastructure\Doctrine\Type\UuidType;
 use Doctrine\ORM\Mapping\Column;
 use Doctrine\ORM\Mapping\Id;
 use Doctrine\ORM\Mapping\MappedSuperclass;
-use App\Infrastructure\Doctrine\Type\UuidType;
 use Symfony\Component\Uid\Uuid;
 
 #[MappedSuperclass]

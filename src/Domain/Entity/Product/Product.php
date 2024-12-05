@@ -19,7 +19,7 @@ class Product extends BaseEntity
         #[Column(type: Types::STRING, length: 255)]
         private string $name,
         #[Embedded(class: Price::class)]
-        private Price  $price,
+        private Price $price,
     ) {
         parent::__construct();
     }

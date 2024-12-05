@@ -16,8 +16,7 @@ class Money
         private int $value,
         #[Column(type: Types::STRING, length: 3, nullable: true)]
         private ?string $currency = 'PLN',
-    ) {
-    }
+    ) {}
 
     public function getCurrency(): string
     {
