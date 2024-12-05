@@ -23,7 +23,7 @@ jobs:
           tools: composer
 
       - name: Install dependencies
-        run: composer install --prefer-dist --no-progress --no-suggest
+        run: composer install --no-scripts --working-dir=.tools
 
       - name: Run PHPStan
         run: .vendor/bin/phpstan analyse --memory-limit=1G
@@ -43,7 +43,7 @@ jobs:
           tools: composer
 
       - name: Install dependencies
-        run: composer install --prefer-dist --no-progress --no-suggest
+        run: composer install --no-scripts --working-dir=.tools
 
       - name: Run PHP-CS-Fixer
         run: .vendor/bin/php-cs-fixer fix --dry-run --diff
