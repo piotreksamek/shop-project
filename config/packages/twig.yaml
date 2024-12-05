@@ -1,7 +1,7 @@
 twig:
-    default_path: '/%kernel.project_dir%/UI/templates'
+    default_path: '/%kernel.project_dir%/templates'
     paths:
-        'src/UI/templates': ~
+        'templates': ~
     form_themes: ['bootstrap_5_layout.html.twig']
 
 when@test:
