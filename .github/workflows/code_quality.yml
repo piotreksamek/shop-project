@@ -26,7 +26,7 @@ jobs:
         run: composer install --prefer-dist --no-progress --no-suggest
 
       - name: Run PHPStan
-        run: vendor/bin/phpstan analyse --memory-limit=1G
+        run: .vendor/bin/phpstan analyse --memory-limit=1G
 
   phpcsfixer:
     name: PHP-CS-Fixer
@@ -39,11 +39,11 @@ jobs:
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
         with:
-          php-version: 8.1 # Dopasuj wersję PHP do projektu
+          php-version: 8.1
           tools: composer
 
       - name: Install dependencies
         run: composer install --prefer-dist --no-progress --no-suggest
 
       - name: Run PHP-CS-Fixer
-        run: vendor/bin/php-cs-fixer fix --dry-run --diff
+        run: .vendor/bin/php-cs-fixer fix --dry-run --diff
