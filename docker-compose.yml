@@ -17,6 +17,14 @@ services:
     networks:
       - shop-project
 
+  shop-redis:
+    image: redis:7-alpine
+    entrypoint: redis-server --appendonly yes --maxmemory 512mb --maxmemory-policy allkeys-lru --requirepass test321
+    volumes:
+      - "shopredis:/data:z"
+    networks:
+      - shop-project
+
   shop-db:
     image: mariadb:10.11.6
     command: --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
@@ -37,3 +45,4 @@ networks:
 
 volumes:
   dbdata: ~
+  shopredis: ~
