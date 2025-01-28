@@ -1,4 +1,6 @@
 parameters:
+    redis_dsn: '%env(REDIS_DSN)%'
+    redis_password: '%env(REDIS_PASSWORD)%'
 
 services:
     _defaults:
