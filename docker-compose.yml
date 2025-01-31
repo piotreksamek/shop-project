@@ -39,6 +39,15 @@ services:
     networks:
       - shop-project
 
+  shop-vue:
+    image: node:20-alpine
+    working_dir: /app
+    volumes:
+      - "./frontend:/app"
+    command: ["sh", "-c", "npm install && npm run dev -- --host"]
+    networks:
+      - shop-project
+
 networks:
   shop-project:
     external: true
