@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace App\Tests\Unit\NBP\Infrastructure\NBP;
 
-use App\NBP\Infrastructure\Client;
-use App\NBP\Infrastructure\DTO\CurrencyDTO;
-use App\NBP\Infrastructure\DTO\RatesDTO;
-use App\NBP\Infrastructure\HttpClient;
+use App\Infrastructure\NBP\Client;
+use App\Infrastructure\NBP\DTO\CurrencyDTO;
+use App\Infrastructure\NBP\DTO\RatesDTO;
+use App\Infrastructure\NBP\HttpClient;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Serializer\SerializerInterface;
