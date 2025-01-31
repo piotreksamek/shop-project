@@ -14,3 +14,7 @@ services:
   shop-redis:
     ports:
       - "6379:6379"
+
+  shop-vue:
+    ports:
+      - "5173:5173"
