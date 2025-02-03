@@ -1,0 +1,27 @@
+{
+  "actions": {
+    "save": "Zapisz",
+    "cancel": "Anuluj"
+  },
+  "product": {
+    "form": {
+      "create": {
+        "title": "Tworzenie nowego produktu",
+        "fields": {
+          "name": {
+            "label": "Nazwa produktu",
+            "placeholder": "Wpisz nazwę produktu"
+          },
+          "description": {
+            "label": "Opis produktu",
+            "placeholder": "Wpisz opis produktu"
+          },
+          "shortDescription": {
+            "label": "Krótki opis produktu",
+            "placeholder": "Wpisz krótki opis produktu"
+          }
+        }
+      }
+    }
+  }
+}
