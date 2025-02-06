@@ -1,7 +1,29 @@
 {
   "actions": {
     "save": "Zapisz",
-    "cancel": "Anuluj"
+    "saveData": "Zapisz dane",
+    "cancel": "Anuluj",
+    "login": "Zaloguj"
+  },
+  "security": {
+    "register": {
+      "label": "Zarejestruj się",
+      "extraData": "Wypełnij dane",
+      "form": {
+        "email": "Email",
+        "password": "Hasło",
+        "confirmPassword": "Powtórz hasło",
+        "firstName": "Imię",
+        "lastName": "Nazwisko",
+        "terms": "Zaakceptuj warunki",
+        "continue": "Kontynuuj",
+        "register": "Zarejestruj się"
+      }
+    },
+    "login": {
+      "label": "Zaloguj się",
+      "error": "Nie poprawne dane"
+    }
   },
   "product": {
     "form": {
@@ -23,5 +45,19 @@
         }
       }
     }
+  },
+  "validation": {
+    "required": "Wartość jest wymagana",
+    "email": "Email jest niepoprawny",
+    "minLength": "Minimalna długość {min} znaków",
+    "sameAsPassword": "Hasła nie są takie same",
+    "acceptTerms": "Potwierdź warunki"
+  },
+  "navbar": {
+    "category": "Kategorie",
+    "login": "Zaloguj się",
+    "logout": "Wyloguj się",
+    "register": "Zarejestruj się",
+    "products": "Twoje produkty"
   }
 }

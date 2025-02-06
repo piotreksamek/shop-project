@@ -17,29 +17,22 @@ abstract class AbstractApiController
     ) {
     }
 
-    protected function successData(mixed $data, int $response = Response::HTTP_OK): JsonResponse
+    protected function successData(?string $message, mixed $data, int $response = Response::HTTP_OK): JsonResponse
     {
         return $this->json([
-            'response' => true,
+            'status' => 'success',
+            'message' => $message,
             'data' => $data,
         ], $response);
     }
 
-//    protected function successPaginatedData(mixed $data, PaginationDTO $paginationDTO): JsonResponse
-//    {
-//        return $this->json([
-//            'response' => true,
-//            'data' => $data,
-//            'pagination' => $paginationDTO,
-//        ], RESPONSE::HTTP_OK);
-//    }
-
-    protected function successKnownIssueMessage(\Exception $exception): JsonResponse
+    protected function successKnownIssueMessage(\Exception $exception, array $errors = []): JsonResponse
     {
         return $this->json([
-            'response' => true,
-            'message' => $this->translator->trans($exception->getMessage(), [], 'exceptions'),
-        ], RESPONSE::HTTP_OK);
+            'status' => 'error',
+            'errors' => $errors,
+            'message' => $this->translator->trans($exception->getPrevious()->getMessage(), [], 'exceptions'),
+        ], RESPONSE::HTTP_BAD_REQUEST);
     }
 
     protected function unknownIssueThrow(\Throwable $throwable): JsonResponse
