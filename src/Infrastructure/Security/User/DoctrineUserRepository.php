@@ -23,4 +23,17 @@ class DoctrineUserRepository extends ServiceEntityRepository implements UserRepo
         $em->persist($user);
         $em->flush();
     }
+
+    public function isEmailExist(string $email): bool
+    {
+        $qb = $this->createQueryBuilder('u');
+
+        $qb
+            ->select('COUNT(u.id)')
+            ->andWhere('u.email = :email')
+            ->setParameter('email', $email)
+        ;
+
+        return (bool) $qb->getQuery()->getSingleScalarResult();
+    }
 }

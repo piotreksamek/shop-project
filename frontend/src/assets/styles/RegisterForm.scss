@@ -1,0 +1,36 @@
+button {
+  width: 100%;
+  background-color: #4CAF50;
+  color: white;
+  cursor: pointer;
+}
+
+span {
+  color: red;
+  font-size: 0.9rem;
+}
+
+.fade-slide-enter-active, .fade-slide-leave-active {
+  transition: opacity 0.5s ease, transform 0.5s ease;
+}
+.fade-slide-enter-from, .fade-slide-leave-to {
+  opacity: 0;
+  transform: translateY(20px);
+}
+.fade-slide-enter-to, .fade-slide-leave-from {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.back-arrow {
+  position: absolute;
+  top: 15px;
+  left: 15px;
+  font-size: 1.5rem;
+  cursor: pointer;
+  color: #333;
+}
+
+.back-arrow:hover {
+  color: #434343;
+}

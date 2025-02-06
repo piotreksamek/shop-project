@@ -1,11 +1,12 @@
-// import './assets/main.css'
+import './assets/main.css'
 
 import { createApp } from 'vue'
 import { createPinia } from 'pinia'
 
 import App from './App.vue'
-import 'bootstrap/dist/css/bootstrap.css'
 import BootstrapVue3 from 'bootstrap-vue-3'
+import 'bootstrap/dist/css/bootstrap.css'
+import 'bootstrap-icons/font/bootstrap-icons.css'
 import router from './router'
 import { createI18n } from 'vue-i18n'
 import pl from './locales/pl.json'

@@ -18,7 +18,7 @@ class RegisterUserCommandHandler
     ) {
     }
 
-    public function __invoke(RegisterUserCommand $command)
+    public function __invoke(RegisterUserCommand $command): void
     {
         $user = $this->userFactory->create($command);
 
