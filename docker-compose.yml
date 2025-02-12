@@ -48,6 +48,11 @@ services:
     networks:
       - shop-project
 
+  shop-mailer:
+    image: schickling/mailcatcher
+    networks:
+      - shop-project
+
 networks:
   shop-project:
     external: true

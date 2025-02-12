@@ -18,3 +18,8 @@ services:
   shop-vue:
     ports:
       - "5173:5173"
+
+  shop-mailer:
+    ports:
+      - "1080:1080"
+      - "1025:1025"

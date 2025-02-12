@@ -14,11 +14,10 @@
             </div>
             <div class="row justify-content-center">
               <div class="col-md-10 col-lg-6 col-xl-5 order-2 order-lg-1">
-                <p class="text-center h1 fw-bold mb-5 mx-1 mx-md-4 mt-4">{{ step === 1 ? t('security.register.label') : t('security.register.extraData') }}</p>
+                <p class="text-center h1 fw-bold mb-5 mx-1 mx-md-4 mt-4">{{ t('security.register.label') }}</p>
                 <transition name="fade-slide" mode="out-in">
-                  <div :key="step">
-                    <FormStep1 v-if="step === 1" :form="form" @validated="register"/>
-                    <FormStep2 v-if="step === 2" :form="form" @validated="updateUserData"/>
+                  <div>
+                    <RegisterForm :form="form" @validated="register"/>
                   </div>
                 </transition>
               </div>
@@ -37,11 +36,13 @@
 <script setup lang="ts">
 import { ref } from "vue";
 import { useI18n } from "vue-i18n";
-import FormStep1 from "@/components/security/form/FormStep1.vue";
-import FormStep2 from "@/components/security/form/FormStep2.vue";
+import RegisterForm from "@/components/security/form/RegisterForm.vue";
 import type { RegisterType } from "@/types/security/RegisterType.ts";
 import "@/assets/styles/RegisterForm.scss";
 import { createUser } from "@/api/security.ts";
+import type {LoginType} from "@/types/security/LoginType.ts";
+import {useAuthStore} from "@/stores/authStore.ts";
+import router from "@/router";
 
 const { t } = useI18n();
 
@@ -54,32 +55,27 @@ const form = ref<RegisterType>({
   terms: false,
 });
 const errors = ref<string[]>([]);
-const step = ref(1);
 const responseMessage = ref<string | null>(null);
+const authStore = useAuthStore();
 
-function nextStep() {
-  step.value++;
-}
 async function register() {
   try {
     const response = await createUser(form.value);
 
-    if (!response) {
-      errors.value.push("Wystąpił nieoczekiwany błąd.");
-    }
-
     responseMessage.value = response.message;
-    errors.value = [];
-    nextStep()
-  } catch (err: unknown) {
+
+    await authStore.login(<LoginType>{
+      username: form.value.email,
+      password: form.value.password
+    });
+
+    await router.push('/user/profile/setup')
+  } catch (err: any) {
     if (err?.status !== 200 && err?.violations) {
       errors.value = err.violations.map((v: any) => v.title);
     } else {
       errors.value.push("Wystąpił nieoczekiwany błąd.");
     }
   }
-}
-async function updateUserData() {
-  console.log('asd');
 }
 </script>

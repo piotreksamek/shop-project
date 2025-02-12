@@ -19,3 +19,11 @@ export const getUser = async () => {
 
   return data;
 }
+
+export const verifyEmail = async (token: string | string[]) => {
+  const { data } = await axios.post(`/email/verify`, {
+    token: token
+  });
+
+  return data;
+}

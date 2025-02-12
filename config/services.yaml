@@ -1,4 +1,6 @@
 parameters:
+    app.email_from: '%env(APP_EMAIL_FROM)%'
+    app.frontend_url: '%env(FRONTEND_URL)%'
 
 services:
     _defaults:

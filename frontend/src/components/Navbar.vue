@@ -28,6 +28,7 @@
             <b-dropdown-item v-if="!authStore.user" @click="router.push('/login')">{{ t('navbar.login') }}</b-dropdown-item>
             <b-dropdown-item v-if="!authStore.user" @click="router.push('/register')">{{ t('navbar.register') }}</b-dropdown-item>
             <b-dropdown-item v-if="authStore.user" @click="router.push('/product/create')">{{ t('navbar.products') }}</b-dropdown-item>
+            <b-dropdown-item v-if="authStore.user" @click="router.push('/user/profile/setup')">{{ t('navbar.profile') }}</b-dropdown-item>
             <b-dropdown-item v-if="authStore.user" @click="logout">{{ t('navbar.logout') }}</b-dropdown-item>
           </b-nav-item-dropdown>
         </b-navbar-nav>

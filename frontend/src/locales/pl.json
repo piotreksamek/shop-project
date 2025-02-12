@@ -9,6 +9,7 @@
     "register": {
       "label": "Zarejestruj się",
       "extraData": "Wypełnij dane",
+      "information": "Informacje",
       "form": {
         "email": "Email",
         "password": "Hasło",
@@ -18,6 +19,16 @@
         "terms": "Zaakceptuj warunki",
         "continue": "Kontynuuj",
         "register": "Zarejestruj się"
+      },
+      "address": {
+        "number": "Numer domu",
+        "apartmentNumber": "Numer mieszkania",
+        "postalCode": "Kod pocztowy",
+        "province": "Województwo",
+        "street": "Ulica",
+        "country": "Kraj",
+        "city": "Miasto",
+        "label": "Adres"
       }
     },
     "login": {
@@ -50,14 +61,20 @@
     "required": "Wartość jest wymagana",
     "email": "Email jest niepoprawny",
     "minLength": "Minimalna długość {min} znaków",
+    "maxLength": "Maksymalna długość {max} znaków",
     "sameAsPassword": "Hasła nie są takie same",
-    "acceptTerms": "Potwierdź warunki"
+    "acceptTerms": "Potwierdź warunki",
+    "postalCode": "Niepoprawny kod pocztowy"
   },
   "navbar": {
     "category": "Kategorie",
     "login": "Zaloguj się",
     "logout": "Wyloguj się",
     "register": "Zarejestruj się",
-    "products": "Twoje produkty"
+    "products": "Twoje produkty",
+    "profile": "Twój profil"
+  },
+  "email":{
+    "verify": "Pomyślnie potwierdzono email."
   }
 }
