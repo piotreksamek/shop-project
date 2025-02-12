@@ -35,7 +35,10 @@ class ProductController extends AbstractApiController
             ->withExpirationTime(QueryCacheDefinition::EXPIRATION_TIME_HOUR)
             ->withTags([CacheTagsDefinition::getProductListCacheTag()]));
 
-        return $this->successData($result);
+        return $this->successData(
+            'Lista produktów',
+            $result
+        );
     }
 
     #[OA\Get(
@@ -48,7 +51,10 @@ class ProductController extends AbstractApiController
             ->withExpirationTime(QueryCacheDefinition::EXPIRATION_TIME_HOUR)
             ->withTags([CacheTagsDefinition::getProductCacheTag($id)]));
 
-        return $this->successData($result);
+        return $this->successData(
+            'Produkt',
+            $result
+        );
     }
 
     #[OA\Post(
@@ -69,6 +75,10 @@ class ProductController extends AbstractApiController
             images: $dto->images,
         ));
 
-        return $this->successData($id);
+        return $this->successData(
+            "Pomyślnie dodano produkt", [
+                'id' => $id,
+            ],
+        );
     }
 }

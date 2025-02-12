@@ -36,4 +36,16 @@ class DoctrineUserRepository extends ServiceEntityRepository implements UserRepo
 
         return (bool) $qb->getQuery()->getSingleScalarResult();
     }
+
+    public function findOneByEmailVerifyToken(string $token): ?User
+    {
+        $qb = $this->createQueryBuilder('u');
+
+        $qb
+            ->andWhere('u.emailVerificationToken = :token')
+            ->setParameter('token', $token)
+            ;
+
+        return $qb->getQuery()->getOneOrNullResult();
+    }
 }

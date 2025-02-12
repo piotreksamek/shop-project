@@ -22,4 +22,15 @@ export default [
     component: () => import('../views/security/Login.vue'),
     meta: { requiresGuest: true },
   },
+  {
+    path: '/email/verify/:token',
+    name: 'VerifyEmail',
+    component: () => import('../views/security/VerifiedEmail.vue'),
+  },
+  {
+    path: '/user/profile/setup',
+    name: 'SetupProfile',
+    component: () => import('../views/user/SetupProfile.vue'),
+    meta: { requiresAuth: true },
+  },
 ]

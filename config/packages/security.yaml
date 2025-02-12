@@ -23,10 +23,15 @@ security:
             pattern: ^/api
             stateless: true
             jwt: ~
+            refresh_jwt:
+                check_path: /api/token/refresh
+            entry_point: jwt
 
     access_control:
         - { path: ^/api/login, roles: PUBLIC_ACCESS }
         - { path: ^/api/security/register, roles: PUBLIC_ACCESS }
+        - { path: ^/api/email/verify, roles: PUBLIC_ACCESS }
+        - { path: ^/api/token/refresh, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/api, roles: IS_AUTHENTICATED_FULLY }
 
 when@test:

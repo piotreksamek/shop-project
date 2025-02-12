@@ -32,18 +32,7 @@ abstract class AbstractApiController
             'status' => 'error',
             'errors' => $errors,
             'message' => $this->translator->trans($exception->getPrevious()->getMessage(), [], 'exceptions'),
-        ], RESPONSE::HTTP_BAD_REQUEST);
-    }
-
-    protected function unknownIssueThrow(\Throwable $throwable): JsonResponse
-    {
-        return $this->json([
-            'response' => false,
-            'errors' => [
-                'message' => $this->translator->trans($throwable->getMessage(), [], 'exceptions'),
-                'date' => new \DateTimeImmutable(),
-            ],
-        ], $throwable->getCode() ?: RESPONSE::HTTP_BAD_REQUEST);
+        ], RESPONSE::HTTP_OK);
     }
 
     /**

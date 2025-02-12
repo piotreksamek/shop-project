@@ -4,10 +4,15 @@ declare(strict_types=1);
 
 namespace App\Domain\Security\Entity;
 
+use App\Domain\Security\Event\UserRegistered;
+use App\Shared\Domain\Event\DomainEventTrait;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping\Column;
 use Doctrine\ORM\Mapping\Entity;
+use Doctrine\ORM\Mapping\HasLifecycleCallbacks;
 use Doctrine\ORM\Mapping\Id;
+use Doctrine\ORM\Mapping\OneToOne;
+use Doctrine\ORM\Mapping\PrePersist;
 use Doctrine\ORM\Mapping\Table;
 use Symfony\Bridge\Doctrine\Types\UuidType;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
@@ -15,11 +20,29 @@ use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Uid\Uuid;
 
 #[Entity]
+#[HasLifecycleCallbacks]
 #[Table(name: 'users')]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
+    use DomainEventTrait;
+
     #[Column(type: Types::STRING)]
     private string $password;
+
+    #[Column(type: Types::DATETIME_IMMUTABLE)]
+    private \DateTimeImmutable $createdAt;
+
+    #[Column(type: Types::BOOLEAN)]
+    private bool $isVerified = false;
+
+    #[Column(type: Types::STRING, length: 32, unique: true, nullable: true)]
+    private ?string $emailVerificationToken = null;
+
+    #[Column(type: Types::DATETIME_IMMUTABLE, nullable: true)]
+    private ?\DateTimeImmutable $emailVerificationExpiresAt = null;
+
+    #[OneToOne(targetEntity: BaseInformation::class, cascade: ['PERSIST', 'REMOVE'])]
+    private BaseInformation $baseInformation;
 
     public function __construct(
         #[Id]
@@ -30,6 +53,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         #[Column(type: Types::JSON)]
         private array $roles = [],
     ) {
+        $this->generateActivationToken();
+
+        $this->apply(new UserRegistered($id, $email, $this->emailVerificationToken));
     }
 
     public function getId(): Uuid
@@ -67,5 +93,34 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     public function eraseCredentials(): void
     {
+    }
+
+    #[PrePersist]
+    public function setCreatedAt(): void
+    {
+        $this->createdAt = new \DateTimeImmutable();
+    }
+
+    public function generateActivationToken(): void
+    {
+        $this->emailVerificationToken = Uuid::v4()->toBase32();
+        $this->emailVerificationExpiresAt = new \DateTimeImmutable('+1 day');
+    }
+
+    public function getEmailVerificationExpiresAt(): ?\DateTimeImmutable
+    {
+        return $this->emailVerificationExpiresAt;
+    }
+
+    public function verifyEmail(): void
+    {
+        $this->isVerified = true;
+        $this->emailVerificationToken = null;
+        $this->emailVerificationExpiresAt = null;
+    }
+
+    public function setBaseInformation(BaseInformation $baseInformation): void
+    {
+        $this->baseInformation = $baseInformation;
     }
 }

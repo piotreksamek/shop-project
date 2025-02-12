@@ -9,7 +9,7 @@
             </div>
             <div class="row justify-content-center">
               <div class="col-md-10 col-lg-6 col-xl-5 order-2 order-lg-1">
-                <p class="text-center h1 fw-bold mb-5 mx-1 mx-md-4 mt-4">{{ t('login.label') }}</p>
+                <p class="text-center h1 fw-bold mb-5 mx-1 mx-md-4 mt-4">{{ t('security.login.label') }}</p>
                 <transition name="fade-slide" mode="out-in">
                   <b-form class="mx-1 mx-md-4">
                     <b-form-group :label="t('security.register.form.email')" label-for="firstName">
@@ -58,9 +58,9 @@ async function login() {
   try {
     await authStore.login(form.value);
 
-    router.push('home');
+    return router.push('home');
     } catch (err: unknown) {
-    error.value = true
+    error.value = true;
   }
 }
 </script>

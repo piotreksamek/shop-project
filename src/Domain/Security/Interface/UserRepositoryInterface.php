@@ -11,4 +11,6 @@ interface UserRepositoryInterface
     public function save(User $user): void;
 
     public function isEmailExist(string $email): bool;
+
+    public function findOneByEmailVerifyToken(string $token): ?User;
 }

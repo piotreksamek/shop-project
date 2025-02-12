@@ -1,5 +1,6 @@
 import axios from 'axios';
 import VueCookies from 'vue-cookies'
+import { useAuthStore } from '@/stores/authStore';
 
 const api = axios.create({
   baseURL: 'http://localhost:8080/api',
@@ -23,12 +24,35 @@ api.interceptors.request.use(
 
 api.interceptors.response.use(
   response => response,
-  error => {
-    if (error.response) {
-      if (error.response.status === 401) {
-        // Odswiezanie tokenu tu bedzie
+  async error => {
+    const authStore = useAuthStore();
+
+    if (error.response && error.response.status === 401) {
+      const refreshToken = VueCookies.get('refresh_token');
+
+      if (refreshToken) {
+        try {
+          const response = await axios.post(
+            'http://localhost:8080/api/token/refresh',
+            {
+              refresh_token: refreshToken
+            });
+
+          const newToken = response.data.token;
+
+          VueCookies.set('auth_token', newToken, '1h');
+
+          error.config.headers['Authorization'] = `Bearer ${newToken}`;
+
+          return axios(error.config);
+        } catch (refreshError) {
+          authStore.logout();
+
+          return Promise.reject(refreshError);
+        }
+      } else {
+        authStore.logout();
       }
-      return Promise.reject(error.response.data);
     }
     return Promise.reject(error);
   }
