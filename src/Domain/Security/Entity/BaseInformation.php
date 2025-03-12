@@ -19,16 +19,44 @@ use Symfony\Component\Uid\Uuid;
 #[Table(name: 'user_base_information')]
 class BaseInformation
 {
+    #[Id]
+    #[Column(type: UuidType::NAME, unique: true)]
+    private Uuid $id;
+
+    #[Embedded(class: Address::class, columnPrefix: false)]
+    private Address $address;
+
     public function __construct(
-        #[Id]
-        #[Column(type: UuidType::NAME, unique: true)]
-        private Uuid $id,
         #[Embedded(class: FirstName::class, columnPrefix: false)]
         private FirstName $firstName,
         #[Embedded(class: LastName::class, columnPrefix: false)]
         private LastName $lastName,
-        #[Embedded(class: Address::class, columnPrefix: false)]
-        private Address $address,
     ) {
+        $this->id = Uuid::v7();
+    }
+
+    public function getId(): Uuid
+    {
+        return $this->id;
+    }
+
+    public function getFirstName(): FirstName
+    {
+        return $this->firstName;
+    }
+
+    public function getLastName(): LastName
+    {
+        return $this->lastName;
+    }
+
+    public function getAddress(): Address
+    {
+        return $this->address;
+    }
+
+    public function setAddress(Address $address): void
+    {
+        $this->address = $address;
     }
 }

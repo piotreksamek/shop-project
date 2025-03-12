@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Infrastructure\NBP;
 
 use App\Domain\NBP\Entity\Currency\Currency;
@@ -7,6 +9,9 @@ use App\Domain\NBP\Interface\CurrencyRepositoryInterface;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
+/**
+ * @extends  ServiceEntityRepository<Currency>
+ */
 class Repository extends ServiceEntityRepository implements CurrencyRepositoryInterface
 {
     public function __construct(ManagerRegistry $registry)

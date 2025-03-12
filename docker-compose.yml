@@ -53,6 +53,40 @@ services:
     networks:
       - shop-project
 
+  shop-elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:8.17.0
+    environment:
+      - discovery.type=single-node
+      - ELASTIC_USERNAME=shop
+      - ELASTIC_PASSWORD=Test4321
+      - ES_JAVA_OPTS=-XX:UseSVE=0
+      - CLI_JAVA_OPTS=-XX:UseSVE=0
+      - xpack.security.enabled=false
+      - xpack.security.enrollment.enabled=false
+      - bootstrap.memory_lock=true
+    ports:
+      - "9200:9200"
+    volumes:
+      - esdata:/usr/share/elasticsearch/data
+    networks:
+      - shop-project
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+
+  shop-kibana:
+    image: docker.elastic.co/kibana/kibana:8.17.0
+    environment:
+      - ELASTICSEARCH_HOSTS=http://shop-elasticsearch:9200
+      - ELASTICSEARCH_USERNAME=shop
+      - ELASTICSEARCH_PASSWORD=Test4321
+#      - XPACK_SECURITY_ENABLED:false
+    ports:
+      - "5601:5601"
+    networks:
+      - shop-project
+
 networks:
   shop-project:
     external: true
@@ -60,3 +94,4 @@ networks:
 volumes:
   dbdata: ~
   shopredis: ~
+  esdata: ~

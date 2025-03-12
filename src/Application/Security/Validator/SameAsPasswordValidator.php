@@ -11,17 +11,21 @@ use Symfony\Component\Validator\ConstraintValidator;
 
 class SameAsPasswordValidator extends ConstraintValidator
 {
-    public function validate(mixed $value, Constraint $constraint)
+    public function validate(mixed $value, Constraint $constraint): void
     {
         if (!$constraint instanceof SameAsPassword) {
             throw new UnexpectedTypeException($constraint, SameAsPassword::class);
         }
 
-        if (null === $value || '' === $value) {
+        if ($value === null || $value === '') {
             return;
         }
 
         $object = $this->context->getObject();
+
+        if (!$object) {
+            throw new UninitializedPropertyException();
+        }
 
         if (!property_exists($object, 'password')) {
             throw new UninitializedPropertyException('Property "password" does not exist');
@@ -36,6 +40,7 @@ class SameAsPasswordValidator extends ConstraintValidator
         }
 
         $this->context->buildViolation($constraint->message)
-            ->addViolation();
+            ->addViolation()
+        ;
     }
 }

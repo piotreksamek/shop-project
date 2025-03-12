@@ -11,6 +11,5 @@ readonly class TokenDTO
     public function __construct(
         #[Assert\NotBlank]
         public string $token
-    ) {
-    }
+    ) {}
 }

@@ -4,6 +4,4 @@ declare(strict_types=1);
 
 namespace App\Shared\Messenger\CommandBus;
 
-interface Command
-{
-}
+interface Command {}

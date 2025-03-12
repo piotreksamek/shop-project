@@ -21,10 +21,15 @@ class Number
         }
     }
 
-    public static function validate(?string $number): void
+    public static function validate(string $number): void
     {
         if (strlen($number) > 10) {
             throw new InvalidArgumentException('Data is too long.');
         }
+    }
+
+    public function getNumber(): ?string
+    {
+        return $this->number;
     }
 }

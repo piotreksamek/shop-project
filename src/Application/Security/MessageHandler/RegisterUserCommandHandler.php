@@ -17,8 +17,7 @@ class RegisterUserCommandHandler
         private readonly UserFactory $userFactory,
         private readonly UserRepositoryInterface $userRepository,
         private readonly DomainEventBus $domainEventBus,
-    ) {
-    }
+    ) {}
 
     public function __invoke(RegisterUserCommand $command): void
     {

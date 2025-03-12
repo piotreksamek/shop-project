@@ -10,6 +10,5 @@ readonly class VerifiedUserEmailCommand implements Command
 {
     public function __construct(
         public string $token,
-    ) {
-    }
+    ) {}
 }

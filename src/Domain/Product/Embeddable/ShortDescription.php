@@ -20,4 +20,9 @@ class ShortDescription
             throw new InvalidArgumentException('Short description cannot be longer than 200 characters');
         }
     }
+
+    public function getShortDescription(): string
+    {
+        return $this->shortDescription;
+    }
 }

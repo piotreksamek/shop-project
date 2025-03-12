@@ -10,20 +10,53 @@ use Doctrine\ORM\Mapping\Column;
 use Doctrine\ORM\Mapping\Embedded;
 use Doctrine\ORM\Mapping\Entity;
 use Doctrine\ORM\Mapping\Id;
+use Doctrine\ORM\Mapping\ManyToOne;
+use Doctrine\ORM\Mapping\Table;
 use Symfony\Bridge\Doctrine\Types\UuidType;
 use Symfony\Component\Uid\Uuid;
 
 #[Entity]
+#[Table(name: 'product_image')]
 class ProductImage
 {
+    #[Id]
+    #[Column(type: UuidType::NAME, unique: true)]
+    private Uuid $id;
+
+    #[ManyToOne(targetEntity: Product::class, inversedBy: 'productImages')]
+    private Product $product;
+
     public function __construct(
-        #[Id]
-        #[Column(type: UuidType::NAME, unique: true)]
-        private Uuid $id,
         #[Embedded(class: Image::class, columnPrefix: false)]
         private Image $image,
-        #[Column(type: Types::BOOLEAN)]
-        private bool $headImage,
+        #[Column(type: Types::INTEGER)]
+        private int $position,
     ) {
+        $this->id = Uuid::v7();
+    }
+
+    public function getImage(): Image
+    {
+        return $this->image;
+    }
+
+    public function getPosition(): int
+    {
+        return $this->position;
+    }
+
+    public function setProduct(Product $product): void
+    {
+        $this->product = $product;
+    }
+
+    public function getId(): Uuid
+    {
+        return $this->id;
+    }
+
+    public function getProduct(): Product
+    {
+        return $this->product;
     }
 }

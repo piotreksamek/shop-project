@@ -14,6 +14,10 @@ class Image
     public function __construct(
         #[Column(type: Types::STRING)]
         private string $path,
-    ) {
+    ) {}
+
+    public function getPath(): string
+    {
+        return $this->path;
     }
 }

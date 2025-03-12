@@ -13,8 +13,7 @@ class Client
     public function __construct(
         private readonly HttpClient $httpClient,
         private readonly SerializerInterface $serializer,
-    ) {
-    }
+    ) {}
 
     public function getCurrencies(): CurrencyDTO
     {

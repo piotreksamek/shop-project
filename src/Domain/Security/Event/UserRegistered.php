@@ -12,7 +12,6 @@ class UserRegistered implements DomainEvent
     public function __construct(
         public Uuid $userId,
         public string $email,
-        public string $emailVerificationToken,
-    ) {
-    }
+        public ?string $emailVerificationToken = null,
+    ) {}
 }
