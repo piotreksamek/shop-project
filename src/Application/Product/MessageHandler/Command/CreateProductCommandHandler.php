@@ -13,7 +13,6 @@ use App\Shared\Messenger\QueryBus\Definition\CacheTagsDefinition;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 use Symfony\Contracts\Cache\TagAwareCacheInterface;
-use Exception;
 
 #[AsMessageHandler]
 class CreateProductCommandHandler
@@ -24,11 +23,9 @@ class CreateProductCommandHandler
         private readonly SymfonyDomainEventBus $domainEventBus,
         private readonly ProductImageFactory $productImageFactory,
         private readonly EntityManagerInterface $entityManager,
-    )
-    {
-    }
+    ) {}
 
-    public function __invoke(CreateProductCommand $command)
+    public function __invoke(CreateProductCommand $command): void
     {
         $this->entityManager->beginTransaction();
 
@@ -44,8 +41,7 @@ class CreateProductCommandHandler
             $this->domainEventBus->dispatchStream($productEventStream);
 
             $this->cache->invalidateTags([CacheTagsDefinition::getProductListCacheTag()]);
-
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             $this->entityManager->rollback();
 
             throw $e;

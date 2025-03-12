@@ -5,12 +5,9 @@ declare(strict_types=1);
 namespace App\Domain\Product\Entity;
 
 use App\Domain\Product\Embeddable\Description;
-use App\Domain\Product\Embeddable\Money;
 use App\Domain\Product\Embeddable\Name;
-use App\Domain\Product\Embeddable\Price;
 use App\Domain\Product\Embeddable\ShortDescription;
 use App\Domain\Product\Event\ProductCreated;
-use App\Domain\Security\Event\UserRegistered;
 use App\Shared\Domain\Event\DomainEventTrait;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -25,6 +22,7 @@ use Doctrine\ORM\Mapping\PrePersist;
 use Doctrine\ORM\Mapping\Table;
 use Symfony\Bridge\Doctrine\Types\UuidType;
 use Symfony\Component\Uid\Uuid;
+use DateTimeImmutable;
 
 #[Entity]
 #[Table(name: 'product')]
@@ -36,11 +34,11 @@ class Product
     public const INDEX = 'product';
 
     #[Column(type: Types::DATETIME_IMMUTABLE)]
-    private \DateTimeImmutable $createdAt;
+    private DateTimeImmutable $createdAt;
 
+    /** @var Collection<int, ProductImage>  */
     #[OneToMany(targetEntity: ProductImage::class, mappedBy: 'product', cascade: ['persist'], orphanRemoval: true)]
     private Collection $images;
-
 
     public function __construct(
         #[Id]
@@ -61,7 +59,7 @@ class Product
     #[PrePersist]
     public function setCreatedAt(): void
     {
-        $this->createdAt = new \DateTimeImmutable();
+        $this->createdAt = new DateTimeImmutable();
     }
 
     public function getId(): Uuid
@@ -84,7 +82,7 @@ class Product
         return $this->description;
     }
 
-    public function getCreatedAt(): \DateTimeImmutable
+    public function getCreatedAt(): DateTimeImmutable
     {
         return $this->createdAt;
     }
@@ -98,6 +96,7 @@ class Product
         $image->setProduct($this);
     }
 
+    /** @return Collection<int, ProductImage>  */
     public function getImages(): Collection
     {
         return $this->images;

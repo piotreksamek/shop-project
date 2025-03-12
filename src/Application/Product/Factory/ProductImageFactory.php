@@ -5,11 +5,13 @@ declare(strict_types=1);
 namespace App\Application\Product\Factory;
 
 use App\Application\Common\DTO\UploadImageDTO;
+use App\Application\Product\DTO\ProductDTO;
 use App\Application\Product\Uploader\ImageUploaderInterface;
 use App\Domain\Product\Embeddable\Image;
 use App\Domain\Product\Entity\Product;
 use App\Domain\Product\Entity\ProductImage;
 use Psr\Log\LoggerInterface;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class ProductImageFactory
 {
@@ -17,16 +19,19 @@ class ProductImageFactory
 
     public function __construct(
         private readonly ImageUploaderInterface $imageUploader,
-        private readonly LoggerInterface $logger
-    ) {
-    }
+    ) {}
 
+    /**
+     * @param array<int, UploadedFile> $images
+     *
+     * @return array<int, ProductImage>
+     */
     public function createMany(Product $product, array $images): array
     {
         $path = sprintf('%s/%s', self::FILE_PATH, $product->getId()->toRfc4122());
 
         $uploadedImages = array_map(
-            fn($image) => $this->imageUploader->upload(UploadImageDTO::from($image, $path)),
+            fn ($image) => $this->imageUploader->upload(UploadImageDTO::from($image, $path)),
             $images
         );
 
@@ -39,7 +44,7 @@ class ProductImageFactory
 
             $product->addImage($productImage);
 
-            $index++;
+            ++$index;
         }
 
         return $result;

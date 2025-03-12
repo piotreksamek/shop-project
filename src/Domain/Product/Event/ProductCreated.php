@@ -9,7 +9,5 @@ use Symfony\Component\Uid\Uuid;
 
 class ProductCreated implements DomainEvent
 {
-    public function __construct(public readonly Uuid $productId)
-    {
-    }
+    public function __construct(public readonly Uuid $productId) {}
 }

@@ -10,17 +10,19 @@ use App\Domain\Product\Entity\Product;
 
 class ProductMapper
 {
+    /** @return array<string, mixed> */
     public static function toElasticsearch(Product $product): array
     {
         return [
             'name' => $product->getName()->getName(),
             'shortDescription' => $product->getShortDescription()?->getShortDescription(),
-            'description' => $product->getDescription()->getDescription(),
+            'description' => $product->getDescription()?->getDescription(),
             'created_at' => $product->getCreatedAt()->format('Y-m-d\TH:i:s\Z'),
             'images' => self::getImages($product),
         ];
     }
 
+    /** @param array<string, mixed> $data */
     public static function fromElasticsearch(array $data): ListProductDTO
     {
         $source = $data['_source'];
@@ -32,6 +34,7 @@ class ProductMapper
         );
     }
 
+    /** @return array<string, mixed> */
     private static function getImages(Product $product): array
     {
         return array_map(function ($image) {

@@ -8,6 +8,7 @@ class ProductIndex implements ElasticIndexInterface
 {
     public const INDEX_NAME = 'product';
 
+    /** @return array<string, mixed> */
     public static function getSettings(): array
     {
         return [
@@ -54,8 +55,8 @@ class ProductIndex implements ElasticIndexInterface
                             ],
                         ],
                     ],
-                ]
-            ]
+                ],
+            ],
         ];
     }
 }

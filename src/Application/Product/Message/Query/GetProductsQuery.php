@@ -8,7 +8,5 @@ use App\Shared\Messenger\QueryBus\Query;
 
 class GetProductsQuery implements Query
 {
-    public function __construct(public ?string $query = null)
-    {
-    }
+    public function __construct(public ?string $query = null) {}
 }

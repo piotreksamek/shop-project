@@ -6,5 +6,10 @@ namespace App\Application\Elasticsearch;
 
 interface ClientInterface
 {
-    public function getDocument(string $index, array $body): array;
+    /**
+     * @param array<string, mixed> $query
+     *
+     * @return array<string, mixed>
+     */
+    public function getDocument(string $index, array $query): array;
 }

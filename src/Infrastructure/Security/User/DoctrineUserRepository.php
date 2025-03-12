@@ -9,6 +9,9 @@ use App\Domain\Security\Interface\UserRepositoryInterface;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
+/**
+ * @extends  ServiceEntityRepository<User>
+ */
 class DoctrineUserRepository extends ServiceEntityRepository implements UserRepositoryInterface
 {
     public function __construct(ManagerRegistry $registry)
@@ -44,7 +47,7 @@ class DoctrineUserRepository extends ServiceEntityRepository implements UserRepo
         $qb
             ->andWhere('u.emailVerificationToken = :token')
             ->setParameter('token', $token)
-            ;
+        ;
 
         return $qb->getQuery()->getOneOrNullResult();
     }

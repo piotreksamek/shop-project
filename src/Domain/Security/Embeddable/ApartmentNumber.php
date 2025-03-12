@@ -21,7 +21,7 @@ class ApartmentNumber
         }
     }
 
-    public static function validate(?string $apartmentNumber): void
+    public static function validate(string $apartmentNumber): void
     {
         if (strlen($apartmentNumber) > 10) {
             throw new InvalidArgumentException('Data is too long.');

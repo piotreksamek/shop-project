@@ -2,7 +2,7 @@ export default [
   {
     path: '/',
     name: 'Home',
-    component: () => import('../views/HomeView.vue')
+    component: () => import('../views/HomeView.vue'),
   },
   {
     path: '/product/list',
@@ -42,9 +42,9 @@ export default [
     name: 'SetupProfile',
     component: () => import('../views/user/Profile.vue'),
     children: [
-      { path: "profile/setup", component: () => import('../views/user/UserDetail.vue'), },
-      { path: "product/create", component: () => import('../views/product/CreateProduct.vue'), },
-      { path: "", redirect: "/user/profile/setup" },
+      { path: 'profile/setup', component: () => import('../views/user/UserDetail.vue') },
+      { path: 'product/create', component: () => import('../views/product/CreateProduct.vue') },
+      { path: '', redirect: '/user/profile/setup' },
     ],
     meta: { requiresAuth: true },
   },

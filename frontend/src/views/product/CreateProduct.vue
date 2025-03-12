@@ -20,7 +20,9 @@
         :placeholder="$t('product.form.create.fields.shortDescription.placeholder')"
         :state="validationState($v.shortDescription)"
       ></BFormInput>
-      <div v-if="$v.shortDescription.$error" class="text-danger small">Short description field has an error.</div>
+      <div v-if="$v.shortDescription.$error" class="text-danger small">
+        Short description field has an error.
+      </div>
     </BFormGroup>
 
     <BFormGroup :label="$t('product.form.create.fields.description.label')">
@@ -31,7 +33,9 @@
         :state="validationState($v.description)"
         required
       ></BFormTextarea>
-      <div v-if="$v.description.$error" class="text-danger small">Description field has an error.</div>
+      <div v-if="$v.description.$error" class="text-danger small">
+        Description field has an error.
+      </div>
     </BFormGroup>
 
     <BFormGroup :label="$t('product.form.create.fields.images.label')">
@@ -46,7 +50,6 @@
       ></BFormFile>
       <div v-if="$v.images.$error" class="text-danger small">At least one image is required.</div>
 
-
       <div class="d-flex flex-wrap mt-2">
         <div
           v-for="(image, index) in imagePreviews"
@@ -57,7 +60,7 @@
             :src="image"
             alt="Image Preview"
             class="img-thumbnail"
-            style="width: 100px; height: 100px; object-fit: cover;"
+            style="width: 100px; height: 100px; object-fit: cover"
             @click="openModal(image)"
           />
           <BButton
@@ -65,7 +68,7 @@
             size="sm"
             @click="removeImage(index)"
             class="position-absolute top-0 right-0"
-            style="z-index: 1;"
+            style="z-index: 1"
           >
             X
           </BButton>
@@ -82,82 +85,82 @@
 </template>
 
 <script lang="ts" setup>
-import { ref } from 'vue';
-import type { ProductCreate } from "@/types/product/ProductCreate.ts";
-import { createProduct } from "@/api/product.ts";
-import { useVuelidate } from "@vuelidate/core";
-import { required, maxLength } from "@vuelidate/validators";
-import router from "@/router";
+import { ref } from 'vue'
+import type { ProductCreate } from '@/types/product/ProductCreate.ts'
+import { createProduct } from '@/api/product.ts'
+import { useVuelidate } from '@vuelidate/core'
+import { required, maxLength } from '@vuelidate/validators'
+import router from '@/router'
 
-const show = ref(true);
+const show = ref(true)
 const form = ref<ProductCreate>({
   name: '',
   description: '',
   shortDescription: '',
   images: [],
-});
+})
 
-const imagePreviews = ref<string[]>([]);
-const showModal = ref(false);
-const currentImage = ref<string>('');
-const errorMessage = ref<string | null>(null);
+const imagePreviews = ref<string[]>([])
+const showModal = ref(false)
+const currentImage = ref<string>('')
+const errorMessage = ref<string | null>(null)
 
 const rules = {
   name: { required, maxLength: maxLength(50) },
   description: { required, maxLength: maxLength(2000) },
   shortDescription: { maxLength: maxLength(200) },
   images: { required },
-};
+}
 
-const $v = useVuelidate(rules, form);
+const $v = useVuelidate(rules, form)
 
 const previewImages = (event: Event) => {
-  const fileInput = event.target as HTMLInputElement;
-  const files = fileInput.files;
+  const fileInput = event.target as HTMLInputElement
+  const files = fileInput.files
 
   if (files) {
     for (let i = 0; i < files.length; i++) {
-      const file = files[i];
-      const reader = new FileReader();
+      const file = files[i]
+      const reader = new FileReader()
       reader.onload = (e) => {
-        imagePreviews.value.push(e.target?.result as string);
-      };
-      reader.readAsDataURL(file);
+        imagePreviews.value.push(e.target?.result as string)
+      }
+      reader.readAsDataURL(file)
     }
   }
-};
+}
 
 const removeImage = (index: number) => {
-  imagePreviews.value.splice(index, 1);
-  form.value.images.splice(index, 1);
-};
+  imagePreviews.value.splice(index, 1)
+  form.value.images.splice(index, 1)
+}
 
 const openModal = (image: string) => {
-  currentImage.value = image;
-  showModal.value = true;
-};
+  currentImage.value = image
+  showModal.value = true
+}
 
 const onSubmit = async (event: Event) => {
-  event.preventDefault();
+  event.preventDefault()
 
-  const isValid = await $v.value.$validate();
+  const isValid = await $v.value.$validate()
   if (!isValid) {
-    return;
+    return
   }
 
   try {
-    const response = await createProduct(form.value);
+    const response = await createProduct(form.value)
 
     router.push(`/product/${response.data.id}`)
   } catch (err) {
-    errorMessage.value = "Wystąpił błąd podczas dodawania produktu. Proszę spróbować ponownie.";
+    errorMessage.value = 'Wystąpił błąd podczas dodawania produktu. Proszę spróbować ponownie.'
 
-    return;
+    return
   }
-};
+}
 
 const validationState = (field: any) => {
-  if (!field.$dirty) return null;
-  return !field.$error;
-};
+  if (!field.$dirty) return null
+  return !field.$error
+}
 </script>

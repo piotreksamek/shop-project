@@ -11,8 +11,7 @@ readonly class UserDTO
     public function __construct(
         public string $email,
         public BaseInformationDTO $baseInformation,
-    ) {
-    }
+    ) {}
 
     public static function from(User $user): self
     {

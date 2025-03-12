@@ -26,6 +26,5 @@ readonly class UserDTO
         public string $firstName,
         #[Assert\NotBlank]
         public string $lastName,
-    ) {
-    }
+    ) {}
 }

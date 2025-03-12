@@ -13,9 +13,7 @@ use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 class UserFactory
 {
-    public function __construct(private readonly UserPasswordHasherInterface $userPasswordHasher)
-    {
-    }
+    public function __construct(private readonly UserPasswordHasherInterface $userPasswordHasher) {}
 
     public function create(RegisterUserCommand $command): User
     {

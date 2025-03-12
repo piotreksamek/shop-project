@@ -26,10 +26,9 @@ class SendWelcomeMail
         private readonly ContactMailerInterface $contactMailer,
         private readonly LoggerInterface $logger,
         private readonly TemplateRendererInterface $templateRenderer,
-    ) {
-    }
+    ) {}
 
-    public function __invoke(UserRegistered $event)
+    public function __invoke(UserRegistered $event): void
     {
         $template = $this->templateRenderer->render(
             '/mail/welcome_new_user.html.twig',

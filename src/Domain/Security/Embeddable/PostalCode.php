@@ -21,7 +21,7 @@ class PostalCode
         }
     }
 
-    public static function validate(?string $postalCode): void
+    public static function validate(string $postalCode): void
     {
         $pattern = '/^\d{2}-\d{3}$/';
 

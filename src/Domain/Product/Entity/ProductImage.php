@@ -11,10 +11,12 @@ use Doctrine\ORM\Mapping\Embedded;
 use Doctrine\ORM\Mapping\Entity;
 use Doctrine\ORM\Mapping\Id;
 use Doctrine\ORM\Mapping\ManyToOne;
+use Doctrine\ORM\Mapping\Table;
 use Symfony\Bridge\Doctrine\Types\UuidType;
 use Symfony\Component\Uid\Uuid;
 
 #[Entity]
+#[Table(name: 'product_image')]
 class ProductImage
 {
     #[Id]
@@ -46,5 +48,15 @@ class ProductImage
     public function setProduct(Product $product): void
     {
         $this->product = $product;
+    }
+
+    public function getId(): Uuid
+    {
+        return $this->id;
+    }
+
+    public function getProduct(): Product
+    {
+        return $this->product;
     }
 }

@@ -58,8 +58,14 @@
 
       <BRow>
         <BCol md="4">
-          <BFormGroup :label="t('security.register.address.apartmentNumber')" label-for="apartmentNumber">
-            <BFormInput id="apartmentNumber" v-model="props.form.address.apartmentNumber"></BFormInput>
+          <BFormGroup
+            :label="t('security.register.address.apartmentNumber')"
+            label-for="apartmentNumber"
+          >
+            <BFormInput
+              id="apartmentNumber"
+              v-model="props.form.address.apartmentNumber"
+            ></BFormInput>
             <div v-if="v$.address.apartmentNumber.$errors.length" class="text-danger small">
               {{ v$.address.apartmentNumber.$errors[0].$message }}
             </div>
@@ -102,53 +108,53 @@
 </template>
 
 <script setup lang="ts">
-import { useI18n } from "vue-i18n";
-import {computed, defineProps} from "vue";
-import { helpers, maxLength, required } from "@vuelidate/validators";
-import { useVuelidate } from "@vuelidate/core";
-import PostalCodeInput from "@/components/common/Input/PostalCodeInput.vue";
-const props = defineProps(["form", "email"]);
-const emit = defineEmits(['validated']);
-const { t } = useI18n();
+import { useI18n } from 'vue-i18n'
+import { computed, defineProps } from 'vue'
+import { helpers, maxLength, required } from '@vuelidate/validators'
+import { useVuelidate } from '@vuelidate/core'
+import PostalCodeInput from '@/components/common/Input/PostalCodeInput.vue'
+const props = defineProps(['form', 'email'])
+const emit = defineEmits(['validated'])
+const { t } = useI18n()
 
 const rules = computed(() => ({
   firstName: {
-    required: helpers.withMessage(t("validation.required"), required),
-    maxLength: helpers.withMessage(t("validation.maxLength", { max: 20 }), maxLength(20))
+    required: helpers.withMessage(t('validation.required'), required),
+    maxLength: helpers.withMessage(t('validation.maxLength', { max: 20 }), maxLength(20)),
   },
   lastName: {
-    required: helpers.withMessage(t("validation.required"), required),
-    maxLength: helpers.withMessage(t("validation.maxLength", { max: 20 }), maxLength(20))
+    required: helpers.withMessage(t('validation.required'), required),
+    maxLength: helpers.withMessage(t('validation.maxLength', { max: 20 }), maxLength(20)),
   },
   address: {
     street: {
-      maxLength: helpers.withMessage(t("validation.maxLength", { max: 100 }), maxLength(100))
+      maxLength: helpers.withMessage(t('validation.maxLength', { max: 100 }), maxLength(100)),
     },
     apartmentNumber: {
-      maxLength: helpers.withMessage(t("validation.maxLength", { max: 10 }), maxLength(10))
+      maxLength: helpers.withMessage(t('validation.maxLength', { max: 10 }), maxLength(10)),
     },
     number: {
-      maxLength: helpers.withMessage(t("validation.maxLength", { max: 10 }), maxLength(10))
+      maxLength: helpers.withMessage(t('validation.maxLength', { max: 10 }), maxLength(10)),
     },
     city: {
-      maxLength: helpers.withMessage(t("validation.maxLength", { max: 100 }), maxLength(100))
+      maxLength: helpers.withMessage(t('validation.maxLength', { max: 100 }), maxLength(100)),
     },
     province: {
-      maxLength: helpers.withMessage(t("validation.maxLength", { max: 100 }), maxLength(100))
+      maxLength: helpers.withMessage(t('validation.maxLength', { max: 100 }), maxLength(100)),
     },
     postalCode: {
-      maxLength: helpers.withMessage(t("validation.maxLength", { max: 6 }), maxLength(6)),
-      pattern: helpers.withMessage(t("validation.postalCode"), helpers.regex(/^\d{2}-\d{3}$/))
+      maxLength: helpers.withMessage(t('validation.maxLength', { max: 6 }), maxLength(6)),
+      pattern: helpers.withMessage(t('validation.postalCode'), helpers.regex(/^\d{2}-\d{3}$/)),
     },
-  }
-}));
+  },
+}))
 
-const v$ = useVuelidate(rules, props.form);
+const v$ = useVuelidate(rules, props.form)
 
 async function validate() {
-  const isValid = await v$.value.$validate();
-  if (!isValid) return;
+  const isValid = await v$.value.$validate()
+  if (!isValid) return
 
-  emit("validated");
+  emit('validated')
 }
 </script>

@@ -11,8 +11,7 @@ readonly class UploadImageDTO
     public function __construct(
         public UploadedFile $image,
         public string $path,
-    ) {
-    }
+    ) {}
 
     public static function from(UploadedFile $image, string $path): self
     {

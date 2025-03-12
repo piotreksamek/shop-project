@@ -9,6 +9,7 @@ use App\Application\User\DTO\Api\BaseInformationDTO;
 use App\Application\User\DTO\Api\UserDTO;
 use App\Application\User\Message\UpdateUserAddressCommand;
 use App\Application\User\Message\UpdateUserCommand;
+use App\Domain\Security\Entity\User;
 use App\Shared\Api\Controller\AbstractApiController;
 use App\Shared\Messenger\CommandBus\CommandBus;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -26,10 +27,12 @@ class UserController extends AbstractApiController
 {
     #[Route('/data', name: 'api_get_user_data', methods: [Request::METHOD_GET])]
     public function getUserData(
+        /** @var User $user */
         #[CurrentUser] UserInterface $user
     ): JsonResponse {
         return $this->successData(
-            'User data', [
+            'User data',
+            [
                 'user' => UserDTO::from($user),
             ],
         );
@@ -37,6 +40,7 @@ class UserController extends AbstractApiController
 
     #[Route('/update/address', name: 'api_post_user_address_update', methods: [Request::METHOD_POST])]
     public function updateAddress(
+        /** @var User $user */
         #[CurrentUser] UserInterface $user,
         #[MapRequestPayload] AddressDTO $dto,
         CommandBus $commandBus,
@@ -56,13 +60,15 @@ class UserController extends AbstractApiController
         }
 
         return $this->successData(
-            'Zaktualizowano dane użytkownika', [
+            'Zaktualizowano dane użytkownika',
+            [
             ]
         );
     }
 
     #[Route('/update', name: 'api_post_user_update', methods: [Request::METHOD_POST])]
     public function updateUser(
+        /** @var User $user */
         #[CurrentUser] UserInterface $user,
         #[MapRequestPayload] BaseInformationDTO $dto,
         CommandBus $commandBus

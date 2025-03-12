@@ -9,7 +9,6 @@ readonly class RatesDTO
     public function __construct(
         public string $currency,
         public string $code,
-        public float  $mid,
-    ) {
-    }
+        public float $mid,
+    ) {}
 }

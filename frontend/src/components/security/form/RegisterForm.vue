@@ -3,8 +3,12 @@
     <BRow>
       <BCol>
         <BFormGroup label="Imię" label-for="firstName" class="mb-4">
-          <BFormInput id="firstName" type="text" v-model="props.form.firstName"
-                      required></BFormInput>
+          <BFormInput
+            id="firstName"
+            type="text"
+            v-model="props.form.firstName"
+            required
+          ></BFormInput>
           <div v-if="v$.firstName.$errors.length" class="text-danger">
             {{ v$.firstName.$errors[0].$message }}
           </div>
@@ -12,8 +16,7 @@
       </BCol>
       <BCol>
         <BFormGroup label="Nazwisko" label-for="lastName" class="mb-4">
-          <BFormInput id="lastName" type="text" v-model="props.form.lastName"
-                      required></BFormInput>
+          <BFormInput id="lastName" type="text" v-model="props.form.lastName" required></BFormInput>
           <div v-if="v$.lastName.$errors.length" class="text-danger">
             {{ v$.lastName.$errors[0].$message }}
           </div>
@@ -29,17 +32,23 @@
     </BFormGroup>
 
     <BFormGroup :label="t('security.register.form.password')" label-for="password" class="mb-4">
-      <BFormInput id="password" type="password" v-model="props.form.password"
-                  required></BFormInput>
+      <BFormInput id="password" type="password" v-model="props.form.password" required></BFormInput>
       <div v-if="v$.password.$errors.length" class="text-danger">
         {{ v$.password.$errors[0].$message }}
       </div>
     </BFormGroup>
 
-    <BFormGroup :label="t('security.register.form.confirmPassword')" label-for="confirmPassword"
-                class="mb-4">
-      <BFormInput id="confirmPassword" type="password" v-model="props.form.confirmPassword"
-                  required></BFormInput>
+    <BFormGroup
+      :label="t('security.register.form.confirmPassword')"
+      label-for="confirmPassword"
+      class="mb-4"
+    >
+      <BFormInput
+        id="confirmPassword"
+        type="password"
+        v-model="props.form.confirmPassword"
+        required
+      ></BFormInput>
       <div v-if="v$.confirmPassword.$errors.length" class="text-danger">
         {{ v$.confirmPassword.$errors[0].$message }}
       </div>
@@ -58,49 +67,50 @@
   </BForm>
 </template>
 
-
 <script setup lang="ts">
-import {useI18n} from "vue-i18n";
-import {computed, defineProps} from "vue";
-import {email, helpers, minLength, required, sameAs} from "@vuelidate/validators";
-import {useVuelidate} from "@vuelidate/core";
+import { useI18n } from 'vue-i18n'
+import { computed, defineProps } from 'vue'
+import { email, helpers, minLength, required, sameAs } from '@vuelidate/validators'
+import { useVuelidate } from '@vuelidate/core'
 
-const {t} = useI18n();
+const { t } = useI18n()
 
-const props = defineProps(["form"]);
-const emit = defineEmits(["validated"]);
+const props = defineProps(['form'])
+const emit = defineEmits(['validated'])
 
 const rules = computed(() => ({
   firstName: {
-    required: helpers.withMessage(t("validation.required"), required),
+    required: helpers.withMessage(t('validation.required'), required),
   },
   lastName: {
-    required: helpers.withMessage(t("validation.required"), required),
+    required: helpers.withMessage(t('validation.required'), required),
   },
   email: {
-    required: helpers.withMessage(t("validation.required"), required),
-    email: helpers.withMessage(t("validation.email"), email)
+    required: helpers.withMessage(t('validation.required'), required),
+    email: helpers.withMessage(t('validation.email'), email),
   },
   password: {
-    required: helpers.withMessage(t("validation.required"), required),
-    minLength: helpers.withMessage(t("validation.minLength", {min: 8}), minLength(8))
+    required: helpers.withMessage(t('validation.required'), required),
+    minLength: helpers.withMessage(t('validation.minLength', { min: 8 }), minLength(8)),
   },
   confirmPassword: {
-    required: helpers.withMessage(t("validation.required"), required),
-    sameAsPassword: helpers.withMessage(t("validation.sameAsPassword"), sameAs(props.form.password))
+    required: helpers.withMessage(t('validation.required'), required),
+    sameAsPassword: helpers.withMessage(
+      t('validation.sameAsPassword'),
+      sameAs(props.form.password),
+    ),
   },
   terms: {
-    required: helpers.withMessage(t("validation.acceptTerms"),
-      value => value === true)
-  }
-}));
+    required: helpers.withMessage(t('validation.acceptTerms'), (value) => value === true),
+  },
+}))
 
-const v$ = useVuelidate(rules, props.form);
+const v$ = useVuelidate(rules, props.form)
 
 async function validateFirstStep() {
-  const isValid = await v$.value.$validate();
-  if (!isValid) return;
+  const isValid = await v$.value.$validate()
+  if (!isValid) return
 
-  emit('validated');
+  emit('validated')
 }
 </script>

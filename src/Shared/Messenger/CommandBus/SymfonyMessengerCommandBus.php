@@ -8,9 +8,7 @@ use Symfony\Component\Messenger\MessageBusInterface;
 
 class SymfonyMessengerCommandBus implements CommandBus
 {
-    public function __construct(private readonly MessageBusInterface $commandBus)
-    {
-    }
+    public function __construct(private readonly MessageBusInterface $commandBus) {}
 
     public function dispatch(Command $command): void
     {

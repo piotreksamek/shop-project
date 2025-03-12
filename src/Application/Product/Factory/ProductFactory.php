@@ -17,7 +17,7 @@ class ProductFactory
         return new Product(
             id: $command->id,
             name: new Name($command->name),
-            shortDescription: new ShortDescription($command->shortDescription),
+            shortDescription: $command->shortDescription ? new ShortDescription($command->shortDescription) : null,
             description: new Description($command->description),
         );
     }

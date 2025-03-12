@@ -24,7 +24,10 @@
 
       <BRow>
         <BCol md="4">
-          <BFormGroup :label="t('security.register.address.apartmentNumber')" label-for="apartmentNumber">
+          <BFormGroup
+            :label="t('security.register.address.apartmentNumber')"
+            label-for="apartmentNumber"
+          >
             <BFormInput id="apartmentNumber" v-model="props.form.apartmentNumber"></BFormInput>
             <div v-if="v$.apartmentNumber.$errors.length" class="text-danger small">
               {{ v$.apartmentNumber.$errors[0].$message }}
@@ -68,44 +71,44 @@
 </template>
 
 <script setup lang="ts">
-import { useI18n } from "vue-i18n";
-import { computed, defineProps } from "vue";
-import { helpers, maxLength } from "@vuelidate/validators";
-import { useVuelidate } from "@vuelidate/core";
-import PostalCodeInput from "@/components/common/Input/PostalCodeInput.vue";
+import { useI18n } from 'vue-i18n'
+import { computed, defineProps } from 'vue'
+import { helpers, maxLength } from '@vuelidate/validators'
+import { useVuelidate } from '@vuelidate/core'
+import PostalCodeInput from '@/components/common/Input/PostalCodeInput.vue'
 
-const props = defineProps(["form"]);
-const emit = defineEmits(['validated']);
-const { t } = useI18n();
+const props = defineProps(['form'])
+const emit = defineEmits(['validated'])
+const { t } = useI18n()
 
 const rules = computed(() => ({
-    street: {
-      maxLength: helpers.withMessage(t("validation.maxLength", { max: 100 }), maxLength(100))
-    },
-    apartmentNumber: {
-      maxLength: helpers.withMessage(t("validation.maxLength", { max: 10 }), maxLength(10))
-    },
-    number: {
-      maxLength: helpers.withMessage(t("validation.maxLength", { max: 10 }), maxLength(10))
-    },
-    city: {
-      maxLength: helpers.withMessage(t("validation.maxLength", { max: 100 }), maxLength(100))
-    },
-    province: {
-      maxLength: helpers.withMessage(t("validation.maxLength", { max: 100 }), maxLength(100))
-    },
-    postalCode: {
-      maxLength: helpers.withMessage(t("validation.maxLength", { max: 6 }), maxLength(6)),
-      pattern: helpers.withMessage(t("validation.postalCode"), helpers.regex(/^\d{2}-\d{3}$/))
-    },
-}));
+  street: {
+    maxLength: helpers.withMessage(t('validation.maxLength', { max: 100 }), maxLength(100)),
+  },
+  apartmentNumber: {
+    maxLength: helpers.withMessage(t('validation.maxLength', { max: 10 }), maxLength(10)),
+  },
+  number: {
+    maxLength: helpers.withMessage(t('validation.maxLength', { max: 10 }), maxLength(10)),
+  },
+  city: {
+    maxLength: helpers.withMessage(t('validation.maxLength', { max: 100 }), maxLength(100)),
+  },
+  province: {
+    maxLength: helpers.withMessage(t('validation.maxLength', { max: 100 }), maxLength(100)),
+  },
+  postalCode: {
+    maxLength: helpers.withMessage(t('validation.maxLength', { max: 6 }), maxLength(6)),
+    pattern: helpers.withMessage(t('validation.postalCode'), helpers.regex(/^\d{2}-\d{3}$/)),
+  },
+}))
 
-const v$ = useVuelidate(rules, props.form);
+const v$ = useVuelidate(rules, props.form)
 
 async function validate() {
-  const isValid = await v$.value.$validate();
-  if (!isValid) return;
+  const isValid = await v$.value.$validate()
+  if (!isValid) return
 
-  emit("validated");
+  emit('validated')
 }
 </script>

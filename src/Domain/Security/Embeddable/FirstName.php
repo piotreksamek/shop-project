@@ -7,7 +7,6 @@ namespace App\Domain\Security\Embeddable;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping\Column;
 use Doctrine\ORM\Mapping\Embeddable;
-use InvalidArgumentException;
 
 #[Embeddable]
 class FirstName
@@ -22,7 +21,7 @@ class FirstName
     public static function validate(string $firstName): void
     {
         if (strlen($firstName) > 100) {
-            throw new InvalidArgumentException('Niepoprawny format kodu pocztowego');
+            throw new \InvalidArgumentException('Niepoprawny format kodu pocztowego');
         }
     }
 

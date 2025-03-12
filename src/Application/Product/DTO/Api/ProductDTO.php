@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Application\Product\DTO\Api;
 
-use OpenApi\Attributes as OA;
 use Symfony\Component\Validator\Constraints as Assert;
 
 class ProductDTO
@@ -18,6 +17,5 @@ class ProductDTO
         public string $description,
         #[Assert\Length(max: 200)]
         public ?string $shortDescription = null,
-    ) {
-    }
+    ) {}
 }

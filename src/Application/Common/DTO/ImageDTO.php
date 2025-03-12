@@ -9,9 +9,13 @@ readonly class ImageDTO
     public function __construct(
         public string $path,
         public int $position,
-    ) {
-    }
+    ) {}
 
+    /**
+     * @param array<int, array<string, mixed>> $images
+     *
+     * @return array<int, ImageDTO>
+     */
     public static function fromArray(array $images): array
     {
         $results = [];

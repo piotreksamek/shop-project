@@ -16,10 +16,9 @@ class GetProductQueryHandler
 {
     public function __construct(
         private readonly EntityManagerInterface $entityManager
-    ) {
-    }
+    ) {}
 
-    public function __invoke(GetProductQuery $query)
+    public function __invoke(GetProductQuery $query): ProductDTO
     {
         $product = $this->getProduct($query->id->toBinary());
 
@@ -28,7 +27,8 @@ class GetProductQueryHandler
         return ProductDTO::from($product, $images);
     }
 
-    private function getProduct(string $productId)
+    /** @return array<string, string> */
+    private function getProduct(string $productId): array
     {
         $qbProduct = $this->entityManager->createQueryBuilder();
 
@@ -43,10 +43,12 @@ class GetProductQueryHandler
             ->andWhere('p.id = :id')
             ->setParameter('id', $productId)
             ->getQuery()
-            ->getOneOrNullResult();
+            ->getOneOrNullResult()
+        ;
     }
 
-    private function getProductImages(string $productId)
+    /** @return array<int, array<string, string>> */
+    private function getProductImages(string $productId): array
     {
         $qb = $this->entityManager->createQueryBuilder();
 
@@ -60,6 +62,7 @@ class GetProductQueryHandler
             ->andWhere('p.id = :id')
             ->setParameter('id', $productId)
             ->getQuery()
-            ->getArrayResult();
+            ->getArrayResult()
+        ;
     }
 }

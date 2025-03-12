@@ -9,10 +9,11 @@ use App\Infrastructure\Elasticsearch\Exception\ElasticException;
 use Elastic\Elasticsearch\ClientBuilder;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\DependencyInjection\Attribute\Autowire;
+use Elastic\Elasticsearch\Client as ElasticsearchClient;
 
 class Client implements ClientInterface
 {
-    private $client;
+    private ElasticsearchClient $client;
 
     public function __construct(
         #[Autowire('%app.elasticsearch_host%')]
@@ -22,14 +23,16 @@ class Client implements ClientInterface
         private readonly LoggerInterface $logger,
     ) {
         $this->client = ClientBuilder::create()
-            ->setHosts([$elasticHost])
-            ->setApiKey($apiKey)
-            ->build();
+            ->setHosts([$this->elasticHost])
+            ->setApiKey($this->apiKey)
+            ->build()
+        ;
     }
 
     /**
-     * @param array $params Parametry zapytania
-     * @return array Wynik zapytania
+     * @param array<string, mixed> $params
+     *
+     * @return array<string, mixed>
      */
     public function search(array $params): array
     {
@@ -38,12 +41,13 @@ class Client implements ClientInterface
 
             return $response->asArray()['hits'];
         } catch (\Exception $e) {
-            $this->logger->error('Elasticsearch query failed: ' . $e->getMessage());
+            $this->logger->error('Elasticsearch query failed: '.$e->getMessage());
 
             return [];
         }
     }
 
+    /** @param array<string, mixed> $params */
     public function createIndex(string $index, array $params): void
     {
         $params = [
@@ -53,7 +57,6 @@ class Client implements ClientInterface
 
         try {
             $this->client->indices()->create($params);
-
         } catch (\Exception $exception) {
             throw new ElasticException($exception->getMessage());
         }
@@ -74,12 +77,17 @@ class Client implements ClientInterface
         }
     }
 
+    /**
+     * @param array<string, mixed> $document
+     *
+     * @return array<string, mixed>
+     */
     public function addDocument(string $index, string $id, array $document): array
     {
         $params = [
             'index' => $index,
             'id' => $id,
-            'body'  => $document
+            'body' => $document,
         ];
 
         try {
@@ -91,6 +99,11 @@ class Client implements ClientInterface
         }
     }
 
+    /**
+     * @param array<string, mixed> $query
+     *
+     * @return array<string, mixed>
+     */
     public function getDocument(string $index, array $query): array
     {
         $params = [

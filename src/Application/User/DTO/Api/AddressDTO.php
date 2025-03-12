@@ -24,8 +24,7 @@ readonly class AddressDTO
         public ?string $postalCode = null,
         #[Assert\Length(max: 100)]
         public ?string $province = null,
-    ) {
-    }
+    ) {}
 
     public static function from(Address $address): self
     {

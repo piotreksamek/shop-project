@@ -17,8 +17,12 @@
       </BCol>
 
       <b-col md="6" class="text-left">
-        <img v-if="detail?.images?.length" :src="getImageUrl(mainImage)"
-             alt="Product image" class="img-fluid large-image"/>
+        <img
+          v-if="detail?.images?.length"
+          :src="getImageUrl(mainImage)"
+          alt="Product image"
+          class="img-fluid large-image"
+        />
       </b-col>
 
       <BCol md="3">
@@ -53,53 +57,54 @@
 </template>
 
 <script lang="ts" setup>
-import { getProductDetail } from "@/api/product";
-import { onMounted, ref } from "vue";
-import type { ProductDetail } from "@/types/product/ProductDetail.ts";
-import {useRoute} from "vue-router";
+import { getProductDetail } from '@/api/product'
+import { onMounted, ref } from 'vue'
+import type { ProductDetail } from '@/types/product/ProductDetail.ts'
+import { useRoute } from 'vue-router'
 
-const detail = ref<ProductDetail | null>(null);
-const isLoading = ref<boolean>(true);
-const mainImage = ref<string>("");
-const route = useRoute();
+const detail = ref<ProductDetail | null>(null)
+const isLoading = ref<boolean>(true)
+const mainImage = ref<string>('')
+const route = useRoute()
 
 async function getDetail() {
-  let response: ProductDetail | null = null;
+  let response: ProductDetail | null = null
 
-  const productId = route.params.id;
+  const productId = route.params.id
 
-  console.log(productId);
+  console.log(productId)
   try {
-    response = await getProductDetail(productId);
-    console.log(response);
+    response = await getProductDetail(productId)
+    console.log(response)
   } catch (err) {
-    console.log(err);
+    console.log(err)
   } finally {
-    isLoading.value = false;
+    isLoading.value = false
     if (response) {
-      detail.value = response;
+      detail.value = response
       if (response.images?.length) {
-        mainImage.value = response.images[0].path;
+        mainImage.value = response.images[0].path
       }
     }
   }
 }
 
 function setMainImage(imagePath: string) {
-  mainImage.value = imagePath;
+  mainImage.value = imagePath
 }
 
 function getImageUrl(path: string): string {
-  return `${import.meta.env.VITE_APP_BASE_URL}${path}`;
+  return `${import.meta.env.VITE_APP_BASE_URL}${path}`
 }
 
 onMounted(async () => {
-  await getDetail();
-});
+  await getDetail()
+})
 </script>
 
 <style scoped>
-.large-image, .small-image {
+.large-image,
+.small-image {
   object-fit: cover;
   width: 100%;
   height: 100%;

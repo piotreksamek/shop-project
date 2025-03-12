@@ -11,6 +11,7 @@ final class QueryCacheDefinition
 
     private int $expirationTime = self::EXPIRATION_TIME_MINUTE;
 
+    /** @var string[]  */
     private array $tags = [];
 
     public static function create(): self
@@ -18,6 +19,7 @@ final class QueryCacheDefinition
         return new self();
     }
 
+    /** @param string[] $tags */
     public function withTags(array $tags): self
     {
         $this->tags = $tags;
@@ -25,6 +27,7 @@ final class QueryCacheDefinition
         return $this;
     }
 
+    /** @return string[] */
     public function getTags(): array
     {
         return $this->tags;

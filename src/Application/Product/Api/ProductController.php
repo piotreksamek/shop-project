@@ -4,9 +4,7 @@ declare(strict_types=1);
 
 namespace App\Application\Product\Api;
 
-use App\Application\Elasticsearch\ClientInterface;
 use App\Application\Product\DTO\Api\ProductDTO;
-use App\Application\Product\DTO\ListingFiltersDTO;
 use App\Application\Product\Message\Command\CreateProductCommand;
 use App\Application\Product\Message\Query\GetProductQuery;
 use App\Application\Product\Message\Query\GetProductsQuery;
@@ -15,8 +13,6 @@ use App\Shared\Messenger\CommandBus\CommandBus;
 use App\Shared\Messenger\QueryBus\Definition\CacheTagsDefinition;
 use App\Shared\Messenger\QueryBus\Definition\QueryCacheDefinition;
 use App\Shared\Messenger\QueryBus\QueryBus;
-use OpenApi\Attributes as OA;
-use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Attribute\AsController;
@@ -56,7 +52,8 @@ class ProductController extends AbstractApiController
     #[Route('/api/products', name: 'api_post_products', methods: [Request::METHOD_POST])]
     public function createProduct(
         CommandBus $commandBus,
-        #[MapRequestPayload] ProductDTO $dto,
+        #[MapRequestPayload]
+        ProductDTO $dto,
         Request $request,
     ): JsonResponse {
         $id = Uuid::v7();
@@ -74,7 +71,8 @@ class ProductController extends AbstractApiController
         }
 
         return $this->successData(
-            "Pomyślnie dodano produkt", [
+            'Pomyślnie dodano produkt',
+            [
                 'id' => $id,
             ],
         );

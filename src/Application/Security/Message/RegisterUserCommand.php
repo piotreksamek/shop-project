@@ -15,6 +15,5 @@ readonly class RegisterUserCommand implements Command
         public string $password,
         public string $firstName,
         public string $lastName,
-    ) {
-    }
+    ) {}
 }

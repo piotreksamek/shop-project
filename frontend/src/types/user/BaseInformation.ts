@@ -1,4 +1,4 @@
-import type {Address} from "@/types/user/Address.ts";
+import type { Address } from '@/types/user/Address.ts'
 
 export interface BaseInformation {
   firstName: string

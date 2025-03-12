@@ -12,8 +12,7 @@ class ContactMailer implements ContactMailerInterface
 {
     public function __construct(
         private readonly MailerInterface $mailer,
-    ) {
-    }
+    ) {}
 
     public function send(Email $email): void
     {

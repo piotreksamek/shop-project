@@ -11,6 +11,5 @@ class GetProductQuery implements Query
 {
     public function __construct(
         public Uuid $id,
-    ) {
-    }
+    ) {}
 }

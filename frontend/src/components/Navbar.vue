@@ -12,7 +12,12 @@
 
         <BNavbarNav class="mx-auto">
           <BNavItem>
-            <BFormInput size="sm" class="mr-sm-2" placeholder="Search" style="width: 300px;"></BFormInput>
+            <BFormInput
+              size="sm"
+              class="mr-sm-2"
+              placeholder="Search"
+              style="width: 300px"
+            ></BFormInput>
           </BNavItem>
         </BNavbarNav>
 
@@ -25,11 +30,21 @@
           </BNavItem>
 
           <BNavItemDropdown text="Twoje konto" right>
-            <BDropdownItem v-if="!authStore.user" @click="router.push('/login')">{{ t('navbar.login') }}</BDropdownItem>
-            <BDropdownItem v-if="!authStore.user" @click="router.push('/register')">{{ t('navbar.register') }}</BDropdownItem>
-            <BDropdownItem v-if="authStore.user" @click="router.push('/user/profile/setup')">{{ t('navbar.profile') }}</BDropdownItem>
-            <BDropdownItem v-if="authStore.user" @click="router.push('/user/product/list')">{{ t('navbar.products') }}</BDropdownItem>
-            <BDropdownItem v-if="authStore.user" @click="logout">{{ t('navbar.logout') }}</BDropdownItem>
+            <BDropdownItem v-if="!authStore.user" @click="router.push('/login')">{{
+              t('navbar.login')
+            }}</BDropdownItem>
+            <BDropdownItem v-if="!authStore.user" @click="router.push('/register')">{{
+              t('navbar.register')
+            }}</BDropdownItem>
+            <BDropdownItem v-if="authStore.user" @click="router.push('/user/profile/setup')">{{
+              t('navbar.profile')
+            }}</BDropdownItem>
+            <BDropdownItem v-if="authStore.user" @click="router.push('/user/product/list')">{{
+              t('navbar.products')
+            }}</BDropdownItem>
+            <BDropdownItem v-if="authStore.user" @click="logout">{{
+              t('navbar.logout')
+            }}</BDropdownItem>
           </BNavItemDropdown>
         </BNavbarNav>
       </BCollapse>
@@ -37,15 +52,15 @@
   </div>
 </template>
 <script setup lang="ts">
-import router from "@/router";
-import {useAuthStore} from "@/stores/authStore.ts";
-import {useI18n} from "vue-i18n";
-const { t } = useI18n();
-const authStore = useAuthStore();
+import router from '@/router'
+import { useAuthStore } from '@/stores/authStore.ts'
+import { useI18n } from 'vue-i18n'
+const { t } = useI18n()
+const authStore = useAuthStore()
 
 function logout() {
-  authStore.logout();
+  authStore.logout()
 
-  router.push('login');
+  router.push('login')
 }
 </script>

@@ -21,7 +21,7 @@ class City
         }
     }
 
-    public static function validate(?string $city): void
+    public static function validate(string $city): void
     {
         if (strlen($city) > 100) {
             throw new InvalidArgumentException('Data is too long.');

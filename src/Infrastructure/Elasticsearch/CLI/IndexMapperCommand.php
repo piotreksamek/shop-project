@@ -6,6 +6,7 @@ namespace App\Infrastructure\Elasticsearch\CLI;
 
 use App\Infrastructure\Elasticsearch\Client;
 use App\Infrastructure\Elasticsearch\Exception\ElasticException;
+use App\Infrastructure\Elasticsearch\Index\ElasticIndexInterface;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
@@ -17,12 +18,12 @@ use Symfony\Component\DependencyInjection\Attribute\AutowireIterator;
 #[AsCommand(name: self::COMMAND_NAME)]
 class IndexMapperCommand extends Command
 {
+    use LockableTrait;
     private const COMMAND_NAME = 'elastic:index_mapper';
 
     private const INDEX_CLASS_CONST = 'INDEX_NAME';
 
-    use LockableTrait;
-
+    /** @param iterable<int, ElasticIndexInterface> $indexSettings */
     public function __construct(
         private readonly Client $client,
         #[AutowireIterator('app.elastic_index')]
@@ -60,7 +61,6 @@ class IndexMapperCommand extends Command
 
             return Command::FAILURE;
         }
-
 
         return Command::SUCCESS;
     }

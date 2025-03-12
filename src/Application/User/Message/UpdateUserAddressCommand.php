@@ -17,6 +17,5 @@ class UpdateUserAddressCommand implements Command
         public ?string $city = null,
         public ?string $postalCode = null,
         public ?string $province = null,
-    ) {
-    }
+    ) {}
 }

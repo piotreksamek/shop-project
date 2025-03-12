@@ -14,8 +14,7 @@ class HttpClient
         private readonly HttpClientInterface $httpClient,
         #[Autowire('%env(NBP_API_URL)%')]
         private readonly string $url,
-    ) {
-    }
+    ) {}
 
     public function sendRequest(string $method, string $prefix): string
     {

@@ -17,8 +17,7 @@ readonly class BaseInformationDTO
         #[Assert\Length(max: 100)]
         public string $lastName,
         public ?AddressDTO $address = null,
-    ) {
-    }
+    ) {}
 
     public static function from(BaseInformation $baseInformation): self
     {

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Infrastructure\Product\EventListener;
 
+use App\Domain\Product\Entity\Product;
 use App\Domain\Product\Event\ProductCreated;
 use App\Infrastructure\Elasticsearch\Client;
 use App\Infrastructure\Elasticsearch\Index\ProductIndex;
@@ -19,15 +20,17 @@ class ElasticsearchProductIndexer
         private readonly ProductRepository $productRepository,
         private readonly Client $client,
         private readonly LoggerInterface $logger
-    ) {
-    }
+    ) {}
 
     public function __invoke(ProductCreated $productCreated): void
     {
+        /** @var Product|null $product */
         $product = $this->productRepository->find($productCreated->productId);
 
         if (!$product) {
             $this->logger->info('Product not found');
+
+            return;
         }
 
         $document = ProductMapper::toElasticsearch($product);

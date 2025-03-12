@@ -10,7 +10,6 @@ readonly class CurrencyDTO
         public string $table,
         public string $no,
         /** @var array<int, RatesDTO> */
-        public array  $rates,
-    ) {
-    }
+        public array $rates,
+    ) {}
 }

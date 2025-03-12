@@ -18,6 +18,7 @@ use Symfony\Bridge\Doctrine\Types\UuidType;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Uid\Uuid;
+use DateTimeImmutable;
 
 #[Entity]
 #[HasLifecycleCallbacks]
@@ -30,7 +31,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private string $password;
 
     #[Column(type: Types::DATETIME_IMMUTABLE)]
-    private \DateTimeImmutable $createdAt;
+    private DateTimeImmutable $createdAt;
 
     #[Column(type: Types::BOOLEAN)]
     private bool $isVerified = false;
@@ -39,8 +40,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private ?string $emailVerificationToken = null;
 
     #[Column(type: Types::DATETIME_IMMUTABLE, nullable: true)]
-    private ?\DateTimeImmutable $emailVerificationExpiresAt = null;
+    private ?DateTimeImmutable $emailVerificationExpiresAt = null;
 
+    /** @param array<int, string> $roles */
     public function __construct(
         #[Id]
         #[Column(type: UuidType::NAME, unique: true)]
@@ -72,6 +74,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this->email;
     }
 
+    /** @return array<int, string> */
     public function getRoles(): array
     {
         return array_unique($this->roles);
@@ -90,9 +93,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     /**
      * @see UserInterface
      */
-    public function eraseCredentials(): void
-    {
-    }
+    public function eraseCredentials(): void {}
 
     #[PrePersist]
     public function setCreatedAt(): void
@@ -126,5 +127,15 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function getBaseInformation(): BaseInformation
     {
         return $this->baseInformation;
+    }
+
+    public function isVerified(): bool
+    {
+        return $this->isVerified;
+    }
+
+    public function getCreatedAt(): DateTimeImmutable
+    {
+        return $this->createdAt;
     }
 }

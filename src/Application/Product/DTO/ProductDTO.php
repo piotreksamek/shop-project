@@ -9,15 +9,20 @@ use Symfony\Component\Uid\Uuid;
 
 readonly class ProductDTO
 {
+    /** @param ImageDTO[] $images */
     public function __construct(
         public Uuid $id,
         public string $name,
         public string $shortDescription,
         public string $description,
         public array $images,
-    ) {
-    }
+    ) {}
 
+    /**
+     * @param array<string, mixed> $data
+     *
+     * @param array<int, array<string, string>> $images
+     */
     public static function from(array $data, array $images): self
     {
         return new self(

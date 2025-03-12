@@ -12,9 +12,7 @@
 </template>
 
 <script lang="ts" setup>
-import LeftSidebar from "@/views/user/LeftSidebar.vue";
+import LeftSidebar from '@/views/user/LeftSidebar.vue'
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

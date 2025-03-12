@@ -13,8 +13,7 @@ class LocalImageUploader implements ImageUploaderInterface
     public function __construct(
         #[Autowire('%app.file_upload_path%')]
         private readonly string $uploadPath
-    ) {
-    }
+    ) {}
 
     public function upload(UploadImageDTO $dto): string
     {
@@ -22,7 +21,7 @@ class LocalImageUploader implements ImageUploaderInterface
 
         $image = $dto->image;
 
-        $fileName = uniqid('image_', true) . '.' . $image->guessExtension();
+        $fileName = uniqid('image_', true).'.'.$image->guessExtension();
 
         $image->move($path, $fileName);
 

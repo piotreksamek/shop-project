@@ -4,6 +4,4 @@ declare(strict_types=1);
 
 namespace App\Infrastructure\Elasticsearch\Exception;
 
-class ElasticException extends \Exception
-{
-}
+class ElasticException extends \Exception {}

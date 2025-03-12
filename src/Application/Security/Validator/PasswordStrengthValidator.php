@@ -16,7 +16,7 @@ class PasswordStrengthValidator extends ConstraintValidator
             throw new UnexpectedTypeException($constraint, PasswordStrength::class);
         }
 
-        if (null === $value || '' === $value) {
+        if ($value === null || $value === '') {
             return;
         }
 
@@ -27,6 +27,7 @@ class PasswordStrengthValidator extends ConstraintValidator
         }
 
         $this->context->buildViolation($constraint->message)
-            ->addViolation();
+            ->addViolation()
+        ;
     }
 }

@@ -9,10 +9,9 @@ use Twig\Environment;
 
 class TwigTemplateRenderer implements TemplateRendererInterface
 {
-    public function __construct(private readonly Environment $twig)
-    {
-    }
+    public function __construct(private readonly Environment $twig) {}
 
+    /** @param string[] $params */
     public function render(string $template, array $params = []): string
     {
         return $this->twig->render($template, $params);

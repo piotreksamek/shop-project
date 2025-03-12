@@ -23,8 +23,7 @@ class Address
         private Province $province,
         #[Embedded(class: PostalCode::class, columnPrefix: false)]
         private PostalCode $postalCode,
-    ) {
-    }
+    ) {}
 
     public function getCity(): City
     {

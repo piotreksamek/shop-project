@@ -10,12 +10,9 @@
         ☰ Menu
       </BButton>
 
-      <LeftSidebar v-if="isSidebarVisible" class="sidebar d-none d-md-block d-lg-block"/>
+      <LeftSidebar v-if="isSidebarVisible" class="sidebar d-none d-md-block d-lg-block" />
 
-      <BCol
-        :md="isSidebarVisible ? 9 : 12"
-        class="content-area"
-      >
+      <BCol :md="isSidebarVisible ? 9 : 12" class="content-area">
         <BRow>
           <div v-if="isLoading" class="loading-container">
             <BSpinner variant="secondary" label="Ładowanie..."></BSpinner>
@@ -25,7 +22,10 @@
             v-else
             v-for="(product, index) in products"
             :key="product.id"
-            cols="12" md="6" lg="4" xl="3"
+            cols="12"
+            md="6"
+            lg="4"
+            xl="3"
             class="mb-4 d-flex flex-column"
           >
             <div
@@ -34,20 +34,16 @@
               @mouseleave="showArrowsForProduct[index] = false"
             >
               <router-link :to="`/product/${product.id}`">
-              <img
-                v-if="product.images && product.images.length > 0"
-                :src="getImageUrl(product.images[currentImageIndex[index]].path)"
-                alt="Product Image"
-                class="img-fluid product-image"
-              />
+                <img
+                  v-if="product.images && product.images.length > 0"
+                  :src="getImageUrl(product.images[currentImageIndex[index]].path)"
+                  alt="Product Image"
+                  class="img-fluid product-image"
+                />
               </router-link>
               <div v-if="showArrowsForProduct[index]" class="arrow-buttons">
-                <button @click="prevImage(index)" class="arrow-button left">
-                  ←
-                </button>
-                <button @click="nextImage(index)" class="arrow-button right">
-                  →
-                </button>
+                <button @click="prevImage(index)" class="arrow-button left">←</button>
+                <button @click="nextImage(index)" class="arrow-button right">→</button>
               </div>
             </div>
             <h4 class="product-name text-center">{{ product.name }}</h4>
@@ -61,56 +57,56 @@
 </template>
 
 <script lang="ts" setup>
-import { getProductsList } from "@/api/product";
-import LeftSidebar from "@/views/product/list/LeftSidebar.vue";
-import { onMounted, ref } from "vue";
+import { getProductsList } from '@/api/product'
+import LeftSidebar from '@/views/product/list/LeftSidebar.vue'
+import { onMounted, ref } from 'vue'
 
-const products = ref([]);
-const isLoading = ref<boolean>(true);
-const isSidebarVisible = ref<boolean>(window.innerWidth >= 768);
-const showArrowsForProduct = ref<boolean[]>([]);
-const currentImageIndex = ref<number[]>([]);
+const products = ref([])
+const isLoading = ref<boolean>(true)
+const isSidebarVisible = ref<boolean>(window.innerWidth >= 768)
+const showArrowsForProduct = ref<boolean[]>([])
+const currentImageIndex = ref<number[]>([])
 
 function getImageUrl(path: string): string {
-  return `${import.meta.env.VITE_APP_BASE_URL}${path}`;
+  return `${import.meta.env.VITE_APP_BASE_URL}${path}`
 }
 
 async function getProducts() {
   try {
-    let response = await getProductsList();
-    products.value = response;
-    showArrowsForProduct.value = Array(products.value.length).fill(false);
-    currentImageIndex.value = Array(products.value.length).fill(0);
+    const response = await getProductsList()
+    products.value = response
+    showArrowsForProduct.value = Array(products.value.length).fill(false)
+    currentImageIndex.value = Array(products.value.length).fill(0)
   } catch (err) {
-    console.error("Błąd podczas pobierania produktów:", err);
+    console.error('Błąd podczas pobierania produktów:', err)
   } finally {
-    isLoading.value = false;
+    isLoading.value = false
   }
 }
 
 function prevImage(index: number) {
   if (currentImageIndex.value[index] > 0) {
-    currentImageIndex.value[index]--;
+    currentImageIndex.value[index]--
   } else {
-    currentImageIndex.value[index] = products.value[index].images.length - 1;
+    currentImageIndex.value[index] = products.value[index].images.length - 1
   }
 }
 
 function nextImage(index: number) {
   if (currentImageIndex.value[index] < products.value[index].images.length - 1) {
-    currentImageIndex.value[index]++;
+    currentImageIndex.value[index]++
   } else {
-    currentImageIndex.value[index] = 0;
+    currentImageIndex.value[index] = 0
   }
 }
 
-window.addEventListener("resize", () => {
-  isSidebarVisible.value = window.innerWidth >= 768;
-});
+window.addEventListener('resize', () => {
+  isSidebarVisible.value = window.innerWidth >= 768
+})
 
 onMounted(() => {
-  getProducts();
-});
+  getProducts()
+})
 </script>
 
 <style scoped>
