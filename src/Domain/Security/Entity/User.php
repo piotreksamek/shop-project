@@ -41,15 +41,14 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[Column(type: Types::DATETIME_IMMUTABLE, nullable: true)]
     private ?\DateTimeImmutable $emailVerificationExpiresAt = null;
 
-    #[OneToOne(targetEntity: BaseInformation::class, cascade: ['PERSIST', 'REMOVE'])]
-    private BaseInformation $baseInformation;
-
     public function __construct(
         #[Id]
         #[Column(type: UuidType::NAME, unique: true)]
         public Uuid $id,
         #[Column(type: Types::STRING, length: 180, unique: true)]
         private string $email,
+        #[OneToOne(targetEntity: BaseInformation::class, cascade: ['PERSIST', 'REMOVE'])]
+        private BaseInformation $baseInformation,
         #[Column(type: Types::JSON)]
         private array $roles = [],
     ) {
@@ -122,5 +121,10 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setBaseInformation(BaseInformation $baseInformation): void
     {
         $this->baseInformation = $baseInformation;
+    }
+
+    public function getBaseInformation(): BaseInformation
+    {
+        return $this->baseInformation;
     }
 }

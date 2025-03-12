@@ -69,7 +69,7 @@ async function register() {
       password: form.value.password
     });
 
-    await router.push('/user/profile/setup')
+    await router.push('/register/address')
   } catch (err: any) {
     if (err?.status !== 200 && err?.violations) {
       errors.value = err.violations.map((v: any) => v.title);

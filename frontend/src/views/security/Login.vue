@@ -11,17 +11,17 @@
               <div class="col-md-10 col-lg-6 col-xl-5 order-2 order-lg-1">
                 <p class="text-center h1 fw-bold mb-5 mx-1 mx-md-4 mt-4">{{ t('security.login.label') }}</p>
                 <transition name="fade-slide" mode="out-in">
-                  <b-form class="mx-1 mx-md-4">
-                    <b-form-group :label="t('security.register.form.email')" label-for="firstName">
-                      <b-form-input id="firstName" v-model="form.username" required></b-form-input>
-                    </b-form-group>
+                  <BForm class="mx-1 mx-md-4">
+                    <BFormGroup :label="t('security.register.form.email')" label-for="firstName">
+                      <BFormInput id="firstName" v-model="form.username" required></BFormInput>
+                    </BFormGroup>
 
-                    <b-form-group :label="t('security.register.form.password')" label-for="lastName">
-                      <b-form-input type="password" id="lastName" v-model="form.password" required></b-form-input>
-                    </b-form-group>
+                    <BFormGroup :label="t('security.register.form.password')" label-for="lastName">
+                      <BFormInput type="password" id="lastName" v-model="form.password" required></BFormInput>
+                    </BFormGroup>
 
-                    <b-button variant="success" @click="login" block>{{ t('actions.login') }}</b-button>
-                  </b-form>
+                    <BButton class="mt-5" variant="success" @click="login" block>{{ t('actions.login') }}</BButton>
+                  </BForm>
                 </transition>
               </div>
               <div class="col-md-10 col-lg-6 col-xl-7 d-flex align-items-center order-1 order-lg-2">

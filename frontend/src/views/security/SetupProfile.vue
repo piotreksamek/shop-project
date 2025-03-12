@@ -24,29 +24,25 @@
 import { ref } from "vue";
 import "@/assets/styles/RegisterForm.scss";
 import SetupUserForm from "@/components/security/form/SetupUserForm.vue";
-import type { BaseInformation } from "@/types/user/BaseInformation.ts";
-import { updateUserBaseInformation } from "@/api/user.ts";
+import {updateUser } from "@/api/user.ts";
 import router from "@/router";
+import type {Address} from "@/types/user/Address.ts";
 
 const errors = ref<string[]>([]);
 const responseMessage = ref<string | null>(null);
 
-const form = ref(<BaseInformation>{
-  firstName: '',
-  lastName: '',
-  address: {
+const form = ref(<Address>{
     street: '',
     number: '',
     city: '',
     apartmentNumber: '',
     province: '',
     postalCode: '',
-  }
 })
 
 async function updateUserData() {
   try {
-    const response = await updateUserBaseInformation(form.value);
+    const response = await updateUser(form.value);
 
     responseMessage.value = response.message;
 

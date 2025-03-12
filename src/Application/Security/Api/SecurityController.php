@@ -24,9 +24,6 @@ use Symfony\Component\Uid\Uuid;
 #[AsController]
 class SecurityController extends AbstractApiController
 {
-    #[OA\Post(
-        path: '/api/security/register',
-    )]
     #[Route('/api/security/register', name: 'api_post_security_user', methods: [Request::METHOD_POST])]
     public function register(
         #[MapRequestPayload] UserDTO $dto,
@@ -38,7 +35,9 @@ class SecurityController extends AbstractApiController
             $bus->dispatch(new RegisterUserCommand(
                 id: $id,
                 email: $dto->email,
-                password: $dto->password
+                password: $dto->password,
+                firstName: $dto->firstName,
+                lastName: $dto->lastName,
             ));
         } catch (HandlerFailedException $exception) {
             return $this->successKnownIssueMessage($exception);

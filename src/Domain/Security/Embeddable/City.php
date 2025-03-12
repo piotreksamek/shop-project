@@ -14,7 +14,7 @@ class City
 {
     public function __construct(
         #[Column(type: Types::STRING, length: 100, nullable: true)]
-        public ?string $city = null
+        private ?string $city = null
     ) {
         if ($city) {
             self::validate($city);
@@ -26,5 +26,10 @@ class City
         if (strlen($city) > 100) {
             throw new InvalidArgumentException('Data is too long.');
         }
+    }
+
+    public function getCity(): ?string
+    {
+        return $this->city;
     }
 }

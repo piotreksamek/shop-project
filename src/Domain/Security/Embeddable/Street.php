@@ -27,4 +27,9 @@ class Street
             throw new InvalidArgumentException('Data is too long.');
         }
     }
+
+    public function getStreet(): ?string
+    {
+        return $this->street;
+    }
 }

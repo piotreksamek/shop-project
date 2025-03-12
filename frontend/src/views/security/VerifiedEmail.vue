@@ -11,7 +11,7 @@
           </div>
           <div class="mt-3">
           <div v-if="isLoading" class="">
-            <b-spinner variant="secondary" label="Spinning"></b-spinner>
+            <BSpinner variant="secondary" label="Spinning"></BSpinner>
           </div>
           <div v-else-if="errorMessage" class="">
             <p class="h3 mb-4">{{ errorMessage }}</p>

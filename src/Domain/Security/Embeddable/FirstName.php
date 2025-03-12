@@ -14,7 +14,7 @@ class FirstName
 {
     public function __construct(
         #[Column(type: Types::STRING, length: 100)]
-        public string $firstName,
+        private string $firstName,
     ) {
         self::validate($firstName);
     }
@@ -24,5 +24,10 @@ class FirstName
         if (strlen($firstName) > 100) {
             throw new InvalidArgumentException('Niepoprawny format kodu pocztowego');
         }
+    }
+
+    public function getFirstName(): string
+    {
+        return $this->firstName;
     }
 }

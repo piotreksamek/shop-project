@@ -31,7 +31,6 @@ class SendWelcomeMail
 
     public function __invoke(UserRegistered $event)
     {
-
         $template = $this->templateRenderer->render(
             '/mail/welcome_new_user.html.twig',
             [

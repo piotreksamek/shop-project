@@ -4,8 +4,9 @@ import { createApp } from 'vue'
 import { createPinia } from 'pinia'
 
 import App from './App.vue'
-import BootstrapVue3 from 'bootstrap-vue-3'
+import { createBootstrap } from 'bootstrap-vue-next';
 import 'bootstrap/dist/css/bootstrap.css'
+import 'bootstrap-vue-next/dist/bootstrap-vue-next.css'
 import 'bootstrap-icons/font/bootstrap-icons.css'
 import router from './router'
 import { createI18n } from 'vue-i18n'
@@ -18,8 +19,8 @@ const i18n = createI18n({
 });
 
 createApp(App)
+  .use(createBootstrap())
   .use(createPinia())
   .use(router)
   .use(i18n)
-  .use(BootstrapVue3)
   .mount('#app')

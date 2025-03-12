@@ -1,5 +1,5 @@
 <template>
-  <b-form-input
+  <BFormInput
     type="text"
     @beforeinput="blockNonNumeric"
     :formatter="formatPostalCode"

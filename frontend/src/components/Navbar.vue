@@ -1,39 +1,39 @@
 <template>
   <div>
-    <b-navbar toggleable="lg" type="dark" variant="white">
-      <b-navbar-brand href="/">NAZWA PROJEKTU</b-navbar-brand>
+    <BNavbar toggleable="lg" type="dark" variant="white">
+      <BNavbarBrand href="/">NAZWA PROJEKTU</BNavbarBrand>
 
-      <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
+      <BNavbarToggle target="nav-collapse"></BNavbarToggle>
 
-      <b-collapse id="nav-collapse" is-nav>
-        <b-navbar-nav>
-          <b-nav-item href="#">{{ t('navbar.category') }}</b-nav-item>
-        </b-navbar-nav>
+      <BCollapse id="nav-collapse" is-nav>
+        <BNavbarNav>
+          <BNavItem href="#">{{ t('navbar.category') }}</BNavItem>
+        </BNavbarNav>
 
-        <b-navbar-nav class="mx-auto">
-          <b-nav-item>
-            <b-form-input size="sm" class="mr-sm-2" placeholder="Search" style="width: 300px;"></b-form-input>
-          </b-nav-item>
-        </b-navbar-nav>
+        <BNavbarNav class="mx-auto">
+          <BNavItem>
+            <BFormInput size="sm" class="mr-sm-2" placeholder="Search" style="width: 300px;"></BFormInput>
+          </BNavItem>
+        </BNavbarNav>
 
-        <b-navbar-nav class="ml-auto">
-          <b-nav-item href="#" disabled>
-            <b-button size="sm" class="my-2 mr-sm-2"><i class="bi bi-heart"></i></b-button>
-          </b-nav-item>
-          <b-nav-item href="#" disabled>
-            <b-button size="sm" class="my-2 mr-sm-2"><i class="bi bi-basket3"></i></b-button>
-          </b-nav-item>
+        <BNavbarNav class="ml-auto">
+          <BNavItem href="#" disabled>
+            <BButton size="sm" class="my-2 mr-sm-2"><i class="bi bi-heart"></i></BButton>
+          </BNavItem>
+          <BNavItem href="#" disabled>
+            <BButton size="sm" class="my-2 mr-sm-2"><i class="bi bi-basket3"></i></BButton>
+          </BNavItem>
 
-          <b-nav-item-dropdown text="Twoje konto" right>
-            <b-dropdown-item v-if="!authStore.user" @click="router.push('/login')">{{ t('navbar.login') }}</b-dropdown-item>
-            <b-dropdown-item v-if="!authStore.user" @click="router.push('/register')">{{ t('navbar.register') }}</b-dropdown-item>
-            <b-dropdown-item v-if="authStore.user" @click="router.push('/product/create')">{{ t('navbar.products') }}</b-dropdown-item>
-            <b-dropdown-item v-if="authStore.user" @click="router.push('/user/profile/setup')">{{ t('navbar.profile') }}</b-dropdown-item>
-            <b-dropdown-item v-if="authStore.user" @click="logout">{{ t('navbar.logout') }}</b-dropdown-item>
-          </b-nav-item-dropdown>
-        </b-navbar-nav>
-      </b-collapse>
-    </b-navbar>
+          <BNavItemDropdown text="Twoje konto" right>
+            <BDropdownItem v-if="!authStore.user" @click="router.push('/login')">{{ t('navbar.login') }}</BDropdownItem>
+            <BDropdownItem v-if="!authStore.user" @click="router.push('/register')">{{ t('navbar.register') }}</BDropdownItem>
+            <BDropdownItem v-if="authStore.user" @click="router.push('/user/profile/setup')">{{ t('navbar.profile') }}</BDropdownItem>
+            <BDropdownItem v-if="authStore.user" @click="router.push('/user/product/list')">{{ t('navbar.products') }}</BDropdownItem>
+            <BDropdownItem v-if="authStore.user" @click="logout">{{ t('navbar.logout') }}</BDropdownItem>
+          </BNavItemDropdown>
+        </BNavbarNav>
+      </BCollapse>
+    </BNavbar>
   </div>
 </template>
 <script setup lang="ts">

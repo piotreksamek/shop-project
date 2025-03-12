@@ -20,4 +20,9 @@ class Description
             throw new InvalidArgumentException('Description cannot be longer than 2000 characters');
         }
     }
+
+    public function getDescription(): string
+    {
+        return $this->description;
+    }
 }

@@ -12,9 +12,11 @@ import VueCookies from "vue-cookies";
 
 const authStore = useAuthStore();
 
-onMounted(() => {
+onMounted( async () => {
   if (VueCookies.get('auth_token')) {
-    authStore.fetchUser();
+    await authStore.fetchUser();
+  } else {
+    authStore.logout();
   }
 });
 </script>

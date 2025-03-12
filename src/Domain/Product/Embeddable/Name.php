@@ -20,4 +20,9 @@ class Name
             throw new InvalidArgumentException('Name cannot be longer than 255 characters');
         }
     }
+
+    public function getName(): string
+    {
+        return $this->name;
+    }
 }

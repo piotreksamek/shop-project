@@ -27,4 +27,9 @@ class Number
             throw new InvalidArgumentException('Data is too long.');
         }
     }
+
+    public function getNumber(): ?string
+    {
+        return $this->number;
+    }
 }

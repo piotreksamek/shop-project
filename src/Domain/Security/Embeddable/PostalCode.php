@@ -14,7 +14,7 @@ class PostalCode
 {
     public function __construct(
         #[Column(type: Types::STRING, length: 6, nullable: true)]
-        public ?string $postalCode = null
+        private ?string $postalCode = null
     ) {
         if ($postalCode) {
             self::validate($postalCode);
@@ -28,5 +28,10 @@ class PostalCode
         if (!preg_match($pattern, $postalCode)) {
             throw new InvalidArgumentException('Niepoprawny format kodu pocztowego');
         }
+    }
+
+    public function getPostalCode(): ?string
+    {
+        return $this->postalCode;
     }
 }

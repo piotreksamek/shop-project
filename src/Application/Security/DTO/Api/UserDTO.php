@@ -22,6 +22,10 @@ readonly class UserDTO
         #[SameAsPassword]
         #[Assert\NotBlank]
         public string $confirmPassword,
+        #[Assert\NotBlank]
+        public string $firstName,
+        #[Assert\NotBlank]
+        public string $lastName,
     ) {
     }
 }

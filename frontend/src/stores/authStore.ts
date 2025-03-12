@@ -17,9 +17,13 @@ export const useAuthStore = defineStore('auth', {
       await this.fetchUser()
     },
     async fetchUser() {
-      this.user = await getUser();
+      let response = await getUser();
+
+      this.user = response.data
+
+      return response.data;
     },
-    async logout() {
+    logout() {
       VueCookies.remove('auth_token');
       VueCookies.remove('refresh_token');
 

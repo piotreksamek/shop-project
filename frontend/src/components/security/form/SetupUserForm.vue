@@ -1,97 +1,76 @@
 <template>
-  <b-container class="mt-4">
-      <b-form>
-        <h1 class="mb-4 text-center">{{ t('security.register.extraData') }}</h1>
-        <h4>{{ t('security.register.information') }}</h4>
+  <BContainer class="mt-4">
+    <BForm>
+      <h1 class="mb-4 text-center">Wypełnij dane adresowe</h1>
 
-        <b-row>
-          <b-col md="6">
-            <b-form-group :label="t('security.register.form.firstName')" label-for="firstName">
-              <b-form-input id="firstName" v-model="props.form.firstName" required></b-form-input>
-              <div v-if="v$.firstName.$errors.length" class="text-danger small">
-                {{ v$.firstName.$errors[0].$message }}
-              </div>
-            </b-form-group>
-          </b-col>
-          <b-col md="6">
-            <b-form-group :label="t('security.register.form.lastName')" label-for="lastName">
-              <b-form-input id="lastName" v-model="props.form.lastName" required></b-form-input>
-              <div v-if="v$.lastName.$errors.length" class="text-danger small">
-                {{ v$.lastName.$errors[0].$message }}
-              </div>
-            </b-form-group>
-          </b-col>
-        </b-row>
-        <h4>{{ t('security.register.address.label') }}</h4>
+      <BRow>
+        <BCol md="6">
+          <BFormGroup :label="t('security.register.address.street')" label-for="street">
+            <BFormInput id="street" v-model="props.form.street"></BFormInput>
+            <div v-if="v$.street.$errors.length" class="text-danger small">
+              {{ v$.address.street.$errors[0].$message }}
+            </div>
+          </BFormGroup>
+        </BCol>
+        <BCol md="6">
+          <BFormGroup :label="t('security.register.address.city')" label-for="city">
+            <BFormInput id="city" v-model="props.form.city"></BFormInput>
+            <div v-if="v$.city.$errors.length" class="text-danger small">
+              {{ v$.city.$errors[0].$message }}
+            </div>
+          </BFormGroup>
+        </BCol>
+      </BRow>
 
-        <b-row>
-          <b-col md="6">
-            <b-form-group :label="t('security.register.address.street')" label-for="street">
-              <b-form-input id="street" v-model="props.form.address.street"></b-form-input>
-              <div v-if="v$.address.street.$errors.length" class="text-danger small">
-                {{ v$.address.street.$errors[0].$message }}
-              </div>
-            </b-form-group>
-          </b-col>
-          <b-col md="6">
-            <b-form-group :label="t('security.register.address.city')" label-for="city">
-              <b-form-input id="city" v-model="props.form.address.city"></b-form-input>
-              <div v-if="v$.address.city.$errors.length" class="text-danger small">
-                {{ v$.address.city.$errors[0].$message }}
-              </div>
-            </b-form-group>
-          </b-col>
-        </b-row>
-        <b-row>
-          <b-col md="4">
-            <b-form-group :label="t('security.register.address.apartmentNumber')" label-for="apartmentNumber">
-              <b-form-input id="apartmentNumber" v-model="props.form.address.apartmentNumber"></b-form-input>
-              <div v-if="v$.address.apartmentNumber.$errors.length" class="text-danger small">
-                {{ v$.address.apartmentNumber.$errors[0].$message }}
-              </div>
-            </b-form-group>
-          </b-col>
-          <b-col md="4">
-            <b-form-group :label="t('security.register.address.number')" label-for="number">
-              <b-form-input id="number" v-model="props.form.address.number"></b-form-input>
-              <div v-if="v$.address.number.$errors.length" class="text-danger small">
-                {{ v$.address.number.$errors[0].$message }}
-              </div>
-            </b-form-group>
-          </b-col>
-          <b-col md="4">
-            <b-form-group :label="t('security.register.address.postalCode')" label-for="postalCode">
-              <PostalCodeInput v-model="props.form.address.postalCode"></PostalCodeInput>
-              <div v-if="v$.address.postalCode.$errors.length" class="text-danger small">
-                {{ v$.address.postalCode.$errors[0].$message }}
-              </div>
-            </b-form-group>
-          </b-col>
-        </b-row>
+      <BRow>
+        <BCol md="4">
+          <BFormGroup :label="t('security.register.address.apartmentNumber')" label-for="apartmentNumber">
+            <BFormInput id="apartmentNumber" v-model="props.form.apartmentNumber"></BFormInput>
+            <div v-if="v$.apartmentNumber.$errors.length" class="text-danger small">
+              {{ v$.apartmentNumber.$errors[0].$message }}
+            </div>
+          </BFormGroup>
+        </BCol>
+        <BCol md="4">
+          <BFormGroup :label="t('security.register.address.number')" label-for="number">
+            <BFormInput id="number" v-model="props.form.number"></BFormInput>
+            <div v-if="v$.number.$errors.length" class="text-danger small">
+              {{ v$.number.$errors[0].$message }}
+            </div>
+          </BFormGroup>
+        </BCol>
+        <BCol md="4">
+          <BFormGroup :label="t('security.register.address.postalCode')" label-for="postalCode">
+            <PostalCodeInput v-model="props.form.postalCode"></PostalCodeInput>
+            <div v-if="v$.postalCode.$errors.length" class="text-danger small">
+              {{ v$.postalCode.$errors[0].$message }}
+            </div>
+          </BFormGroup>
+        </BCol>
+      </BRow>
 
-        <b-row>
-          <b-col md="6">
-            <b-form-group :label="t('security.register.address.province')" label-for="province">
-              <b-form-input id="province" v-model="props.form.address.province"></b-form-input>
-              <div v-if="v$.address.province.$errors.length" class="text-danger small">
-                {{ v$.address.province.$errors[0].$message }}
-              </div>
-            </b-form-group>
-          </b-col>
-        </b-row>
+      <BRow>
+        <BCol md="6">
+          <BFormGroup :label="t('security.register.address.province')" label-for="province">
+            <BFormInput id="province" v-model="props.form.province"></BFormInput>
+            <div v-if="v$.province.$errors.length" class="text-danger small">
+              {{ v$.province.$errors[0].$message }}
+            </div>
+          </BFormGroup>
+        </BCol>
+      </BRow>
 
-        <b-button variant="success" @click="validate" block class="mt-3">
-          {{ t('actions.saveData') }}
-        </b-button>
-      </b-form>
-  </b-container>
-
+      <BButton variant="secondary" @click="validate" block class="mt-3 w-25">
+        {{ t('actions.saveData') }}
+      </BButton>
+    </BForm>
+  </BContainer>
 </template>
 
 <script setup lang="ts">
 import { useI18n } from "vue-i18n";
 import { computed, defineProps } from "vue";
-import { helpers, maxLength, required } from "@vuelidate/validators";
+import { helpers, maxLength } from "@vuelidate/validators";
 import { useVuelidate } from "@vuelidate/core";
 import PostalCodeInput from "@/components/common/Input/PostalCodeInput.vue";
 
@@ -100,15 +79,6 @@ const emit = defineEmits(['validated']);
 const { t } = useI18n();
 
 const rules = computed(() => ({
-  firstName: {
-    required: helpers.withMessage(t("validation.required"), required),
-    maxLength: helpers.withMessage(t("validation.maxLength", { max: 20 }), maxLength(20))
-  },
-  lastName: {
-    required: helpers.withMessage(t("validation.required"), required),
-    maxLength: helpers.withMessage(t("validation.maxLength", { max: 20 }), maxLength(20))
-  },
-  address: {
     street: {
       maxLength: helpers.withMessage(t("validation.maxLength", { max: 100 }), maxLength(100))
     },
@@ -128,7 +98,6 @@ const rules = computed(() => ({
       maxLength: helpers.withMessage(t("validation.maxLength", { max: 6 }), maxLength(6)),
       pattern: helpers.withMessage(t("validation.postalCode"), helpers.regex(/^\d{2}-\d{3}$/))
     },
-  }
 }));
 
 const v$ = useVuelidate(rules, props.form);
