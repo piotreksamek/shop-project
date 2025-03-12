@@ -14,17 +14,22 @@ class ApartmentNumber
 {
     public function __construct(
         #[Column(type: Types::STRING, length: 10, nullable: true)]
-        public ?string $apartmentNumber = null
+        private ?string $apartmentNumber = null
     ) {
         if ($apartmentNumber) {
             self::validate($apartmentNumber);
         }
     }
 
-    public static function validate(?string $apartmentNumber): void
+    public static function validate(string $apartmentNumber): void
     {
         if (strlen($apartmentNumber) > 10) {
             throw new InvalidArgumentException('Data is too long.');
         }
+    }
+
+    public function getApartmentNumber(): ?string
+    {
+        return $this->apartmentNumber;
     }
 }

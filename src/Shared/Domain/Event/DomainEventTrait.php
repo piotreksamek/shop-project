@@ -6,6 +6,7 @@ namespace App\Shared\Domain\Event;
 
 trait DomainEventTrait
 {
+    /** @var array<string, DomainEvent> */
     private array $uncommittedEvents = [];
 
     public function apply(DomainEvent $event): void

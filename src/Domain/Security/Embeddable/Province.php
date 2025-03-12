@@ -14,17 +14,22 @@ class Province
 {
     public function __construct(
         #[Column(type: Types::STRING, length: 100, nullable: true)]
-        public ?string $province = null
+        private ?string $province = null
     ) {
         if ($province) {
             self::validate($province);
         }
     }
 
-    public static function validate(?string $province): void
+    public static function validate(string $province): void
     {
         if (strlen($province) > 100) {
             throw new InvalidArgumentException('Data is too long.');
         }
+    }
+
+    public function getProvince(): ?string
+    {
+        return $this->province;
     }
 }

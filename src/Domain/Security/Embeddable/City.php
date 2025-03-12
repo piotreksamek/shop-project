@@ -14,17 +14,22 @@ class City
 {
     public function __construct(
         #[Column(type: Types::STRING, length: 100, nullable: true)]
-        public ?string $city = null
+        private ?string $city = null
     ) {
         if ($city) {
             self::validate($city);
         }
     }
 
-    public static function validate(?string $city): void
+    public static function validate(string $city): void
     {
         if (strlen($city) > 100) {
             throw new InvalidArgumentException('Data is too long.');
         }
+    }
+
+    public function getCity(): ?string
+    {
+        return $this->city;
     }
 }

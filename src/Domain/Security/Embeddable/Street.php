@@ -21,10 +21,15 @@ class Street
         }
     }
 
-    public static function validate(?string $street): void
+    public static function validate(string $street): void
     {
         if (strlen($street) > 100) {
             throw new InvalidArgumentException('Data is too long.');
         }
+    }
+
+    public function getStreet(): ?string
+    {
+        return $this->street;
     }
 }

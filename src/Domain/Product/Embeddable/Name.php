@@ -7,7 +7,6 @@ namespace App\Domain\Product\Embeddable;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping\Column;
 use Doctrine\ORM\Mapping\Embeddable;
-use InvalidArgumentException;
 
 #[Embeddable]
 class Name
@@ -17,7 +16,12 @@ class Name
         private string $name
     ) {
         if (strlen($name) > 255) {
-            throw new InvalidArgumentException('Name cannot be longer than 255 characters');
+            throw new \InvalidArgumentException('Name cannot be longer than 255 characters');
         }
+    }
+
+    public function getName(): string
+    {
+        return $this->name;
     }
 }

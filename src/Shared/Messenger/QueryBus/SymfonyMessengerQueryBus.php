@@ -50,6 +50,7 @@ final class SymfonyMessengerQueryBus implements QueryBus
     public function cacheExist(Query $query): bool
     {
         $cacheKey = $this->generateCacheKey($query);
+
         /** @var TagAwareAdapter $cacheAdapter */
         $cacheAdapter = $this->applicationQueryCachePool;
 

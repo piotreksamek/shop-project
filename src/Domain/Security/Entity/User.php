@@ -18,6 +18,7 @@ use Symfony\Bridge\Doctrine\Types\UuidType;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Uid\Uuid;
+use DateTimeImmutable;
 
 #[Entity]
 #[HasLifecycleCallbacks]
@@ -30,7 +31,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private string $password;
 
     #[Column(type: Types::DATETIME_IMMUTABLE)]
-    private \DateTimeImmutable $createdAt;
+    private DateTimeImmutable $createdAt;
 
     #[Column(type: Types::BOOLEAN)]
     private bool $isVerified = false;
@@ -39,17 +40,17 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private ?string $emailVerificationToken = null;
 
     #[Column(type: Types::DATETIME_IMMUTABLE, nullable: true)]
-    private ?\DateTimeImmutable $emailVerificationExpiresAt = null;
+    private ?DateTimeImmutable $emailVerificationExpiresAt = null;
 
-    #[OneToOne(targetEntity: BaseInformation::class, cascade: ['PERSIST', 'REMOVE'])]
-    private BaseInformation $baseInformation;
-
+    /** @param array<int, string> $roles */
     public function __construct(
         #[Id]
         #[Column(type: UuidType::NAME, unique: true)]
         public Uuid $id,
         #[Column(type: Types::STRING, length: 180, unique: true)]
         private string $email,
+        #[OneToOne(targetEntity: BaseInformation::class, cascade: ['PERSIST', 'REMOVE'])]
+        private BaseInformation $baseInformation,
         #[Column(type: Types::JSON)]
         private array $roles = [],
     ) {
@@ -73,6 +74,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this->email;
     }
 
+    /** @return array<int, string> */
     public function getRoles(): array
     {
         return array_unique($this->roles);
@@ -91,9 +93,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     /**
      * @see UserInterface
      */
-    public function eraseCredentials(): void
-    {
-    }
+    public function eraseCredentials(): void {}
 
     #[PrePersist]
     public function setCreatedAt(): void
@@ -122,5 +122,20 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setBaseInformation(BaseInformation $baseInformation): void
     {
         $this->baseInformation = $baseInformation;
+    }
+
+    public function getBaseInformation(): BaseInformation
+    {
+        return $this->baseInformation;
+    }
+
+    public function isVerified(): bool
+    {
+        return $this->isVerified;
+    }
+
+    public function getCreatedAt(): DateTimeImmutable
+    {
+        return $this->createdAt;
     }
 }

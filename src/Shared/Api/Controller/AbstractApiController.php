@@ -8,14 +8,15 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Serializer\SerializerInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
+use Exception;
+use Throwable;
 
 abstract class AbstractApiController
 {
     public function __construct(
         private readonly SerializerInterface $serializer,
         private readonly TranslatorInterface $translator,
-    ) {
-    }
+    ) {}
 
     protected function successData(?string $message, mixed $data, int $response = Response::HTTP_OK): JsonResponse
     {
@@ -26,19 +27,18 @@ abstract class AbstractApiController
         ], $response);
     }
 
-    protected function successKnownIssueMessage(\Exception $exception, array $errors = []): JsonResponse
+    /** @param array<int, string> $errors */
+    protected function successKnownIssueMessage(Exception $exception, array $errors = []): JsonResponse
     {
         return $this->json([
             'status' => 'error',
             'errors' => $errors,
             'message' => $this->translator->trans($exception->getPrevious()->getMessage(), [], 'exceptions'),
-        ], RESPONSE::HTTP_OK);
+        ], Response::HTTP_OK);
     }
 
-    /**
-     * @param array<string, string> $errors
-     */
-    protected function errors(array $errors, ?\Throwable $throwable = null): JsonResponse
+    /** @param array<string, string> $errors */
+    protected function errors(array $errors, ?Throwable $throwable = null): JsonResponse
     {
         return $this->json([
             'response' => false,
@@ -47,7 +47,7 @@ abstract class AbstractApiController
                 'message' => $this->translator->trans($throwable->getMessage(), [], 'exceptions'),
                 $errors,
             ],
-        ], RESPONSE::HTTP_BAD_REQUEST);
+        ], Response::HTTP_BAD_REQUEST);
     }
 
     /**

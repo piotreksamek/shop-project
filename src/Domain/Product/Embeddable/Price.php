@@ -17,6 +17,20 @@ class Price
         private Money $gross,
         #[Embedded(class: Vat::class)]
         private Vat $vat,
-    ) {
+    ) {}
+
+    public function getNet(): Money
+    {
+        return $this->net;
+    }
+
+    public function getGross(): Money
+    {
+        return $this->gross;
+    }
+
+    public function getVat(): Vat
+    {
+        return $this->vat;
     }
 }

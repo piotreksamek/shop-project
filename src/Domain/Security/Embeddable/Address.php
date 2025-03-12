@@ -23,6 +23,35 @@ class Address
         private Province $province,
         #[Embedded(class: PostalCode::class, columnPrefix: false)]
         private PostalCode $postalCode,
-    ) {
+    ) {}
+
+    public function getCity(): City
+    {
+        return $this->city;
+    }
+
+    public function getStreet(): Street
+    {
+        return $this->street;
+    }
+
+    public function getApartmentNumber(): ApartmentNumber
+    {
+        return $this->apartmentNumber;
+    }
+
+    public function getNumber(): Number
+    {
+        return $this->number;
+    }
+
+    public function getProvince(): Province
+    {
+        return $this->province;
+    }
+
+    public function getPostalCode(): PostalCode
+    {
+        return $this->postalCode;
     }
 }

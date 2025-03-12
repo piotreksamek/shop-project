@@ -11,9 +11,7 @@ use Symfony\Component\Validator\ConstraintValidator;
 
 class EmailExistValidator extends ConstraintValidator
 {
-    public function __construct(private readonly UserRepositoryInterface $userRepository)
-    {
-    }
+    public function __construct(private readonly UserRepositoryInterface $userRepository) {}
 
     public function validate(mixed $value, Constraint $constraint)
     {
@@ -21,7 +19,7 @@ class EmailExistValidator extends ConstraintValidator
             throw new UnexpectedTypeException($constraint, EmailExist::class);
         }
 
-        if (null === $value || '' === $value) {
+        if ($value === null || $value === '') {
             return;
         }
 
@@ -32,6 +30,7 @@ class EmailExistValidator extends ConstraintValidator
         }
 
         $this->context->buildViolation($constraint->message)
-            ->addViolation();
+            ->addViolation()
+        ;
     }
 }

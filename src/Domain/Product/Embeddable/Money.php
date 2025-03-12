@@ -20,4 +20,14 @@ class Money
             throw new InvalidArgumentException('Currency must be 3 characters long');
         }
     }
+
+    public function getPrice(): int
+    {
+        return $this->price;
+    }
+
+    public function getCurrency(): string
+    {
+        return $this->currency;
+    }
 }

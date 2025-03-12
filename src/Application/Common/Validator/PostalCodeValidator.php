@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Application\Common\Validator;
 
 use App\Domain\Security\Embeddable\PostalCode as PostalCodeVO;
-use InvalidArgumentException;
 use Symfony\Component\Form\Exception\UnexpectedTypeException;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
@@ -18,13 +17,13 @@ class PostalCodeValidator extends ConstraintValidator
             throw new UnexpectedTypeException($constraint, PostalCode::class);
         }
 
-        if (null === $value || '' === $value) {
+        if ($value === null || $value === '') {
             return;
         }
 
         try {
             PostalCodeVO::validate($value);
-        } catch (InvalidArgumentException) {
+        } catch (\InvalidArgumentException) {
             $this->context->buildViolation($constraint->message);
         }
     }

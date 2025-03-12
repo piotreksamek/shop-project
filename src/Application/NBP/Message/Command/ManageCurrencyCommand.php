@@ -10,6 +10,5 @@ readonly class ManageCurrencyCommand
         public string $currency,
         public string $code,
         public float $mid,
-    ) {
-    }
+    ) {}
 }

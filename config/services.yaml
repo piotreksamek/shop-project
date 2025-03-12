@@ -1,6 +1,9 @@
 parameters:
+    app.file_upload_path: '%kernel.project_dir%/public'
     app.email_from: '%env(APP_EMAIL_FROM)%'
     app.frontend_url: '%env(FRONTEND_URL)%'
+    app.elasticsearch_host: '%env(ELASTICSEARCH_HOST)%'
+    app.elasticsearch_api_key: '%env(ELASTICSEARCH_API_KEY)%'
 
 services:
     _defaults:
@@ -13,3 +16,7 @@ services:
             - '../src/Infrastructure/DependencyInjection/'
             - '../src/Data/Entity/'
             - '../src/Kernel.php'
+
+    _instanceof:
+        App\Infrastructure\Elasticsearch\Index\ElasticIndexInterface:
+            tags: ['app.elastic_index']

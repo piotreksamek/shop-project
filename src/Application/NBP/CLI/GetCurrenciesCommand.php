@@ -23,7 +23,7 @@ class GetCurrenciesCommand extends Command
 {
     use LockableTrait;
 
-    const NAME = 'app:nbp:get-currencies';
+    public const NAME = 'app:nbp:get-currencies';
 
     public function __construct(
         private readonly Client $client,
@@ -50,13 +50,12 @@ class GetCurrenciesCommand extends Command
         }
 
         foreach ($currencies->rates as $currency) {
-            $this->messageBus->dispatch((new ManageCurrencyCommand(
+            $this->messageBus->dispatch(new ManageCurrencyCommand(
                 $currency->currency,
                 $currency->code,
                 $currency->mid
-            )));
+            ));
         }
-
 
         return Command::SUCCESS;
     }

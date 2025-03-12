@@ -19,8 +19,13 @@ class Vat
 
     public static function isValid(int $vat): void
     {
-        if ($vat < 0 || $vat < 100) {
+        if ($vat < 0 || $vat > 100) {
             throw new InvalidArgumentException('Vat is incorrect');
         }
+    }
+
+    public function getVat(): int
+    {
+        return $this->vat;
     }
 }
